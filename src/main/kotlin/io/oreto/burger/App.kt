@@ -16,7 +16,7 @@ class App :Kooby({
     routerOptions { isIgnoreTrailingSlash = true }
 
     serverOptions {
-        port = config.getInt("server.port")
+        port = System.getenv("PORT")?.toInt() ?: config.getInt("server.port")
     }
 
     onStarting {
