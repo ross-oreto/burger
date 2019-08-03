@@ -1,0 +1,76 @@
+@args(Integer index, Integer total, Integer year, String path)
+
+@extracss => {
+    <link rel="stylesheet" href='/assets/css/burgers/@year/burgers.css' >
+}
+
+@views.main.template(index, total, path, extracss) -> {
+<div class="burger">
+    @if (index > 0 && index <= 10) {
+        <div class="center text-center scroll-up-btn">
+            @if (index == 10) {
+                <a href="@path"><i class="fas fa-arrow-circle-up fa-3x"></i></a>
+            } else {
+                <a href="@path/@(index+1)"><i class="fas fa-arrow-circle-up fa-3x"></i></a>
+            }
+        </div>
+        <div class="card center">
+            <div class="card-body">
+                <h1 class="card-title text-center">#@index</h1>
+                <p class="card-text">Good AF</p>
+            </div>
+        </div>
+    } else if (index <= 0) {
+        <div class="center text-center scroll-up-btn">
+            <a href="@path/@(index+1)"><i class="fas fa-arrow-circle-up fa-3x"></i></a>
+        </div>
+        <div class="card center">
+            <div class="card-body text-center">
+                <h1 class="card-title text-center">The Tasters</h1>
+                <p class="card-text">A little about the authors and taste judges</p>
+            </div>
+        </div>
+        <br>
+        <div class="card center">
+            <div class="card-body">
+                <h1 class="card-title text-center">Callum M.</h1>
+                <p class="card-text">Canadian</p>
+            </div>
+        </div>
+        <br>
+        <div class="card center">
+            <div class="card-body">
+                <h1 class="card-title text-center">Ross Oreto</h1>
+                <p class="card-text">American</p>
+            </div>
+        </div>
+    } else {
+        <div class="card center">
+            <div class="card-body">
+                <h1 class="card-title text-center">The definitive @year Nashville, TN <br>burger countdown</h1>
+                <p class="card-text">
+                    We personally tried several of Nashville's most recommended burgers and ranked them according to a well thought out scoring system.
+                    <br><br><br>
+                    Burgers were ranked on the following criteria:
+                    <ul>
+                        <li>
+                            Taste (0-10): The overall taste and finish of the burger.
+                        </li><br>
+                        <li>
+                            Quality (0-5): The quality, freshness of the ingredients, and the craftsmanship of the burger.
+                        </li><br>
+                        <li>
+                            Temperature (0-3): The temperature of the meat, how well the natural juices and flavor of the meat is announced.
+                        </li><br>
+                        <li>
+                            Presentation (0-2): Not just how well the burger looks plated,
+                            but how original the sandwich is and how easy it is to handle and savor throughout the meal.
+                        </li>
+                    </ul>
+                    <i>20 is the highest possible total and they are scored in .5 point increments</i>
+                </p>
+            </div>
+        </div>
+    }
+</div>
+}
