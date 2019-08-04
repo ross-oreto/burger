@@ -1,6 +1,6 @@
 [
   {
-    "id": 10,
+    "id": "hugh",
     "restaurant": "Hugh Baby's at West End",
     "plate": "Double Cheeseburger",
     "taste": 7.0,
@@ -11,7 +11,7 @@
     "notes": "Cheap and amazing value. Best bang for buck burger in Nashville. Doesn't sacrifice on taste or quality and offers variety on the classic style choices."
   },
   {
-    "id": 9,
+    "id": "melrose",
     "restaurant": "M.L. Rose at Melrose",
     "plate": "The Animal",
     "taste": 8.0,
@@ -22,7 +22,7 @@
     "notes": "A solid choice and looks great alongside waffle fries. The only downside is the meat which is overcooked for a gourmet style and loses a lot of flavor."
   },
   {
-    "id": 7,
+    "id": "mill",
     "restaurant": "Mill Creek Taproom at 12th South",
     "plate": "The Smashville Burger",
     "taste": 8.0,
@@ -30,10 +30,10 @@
     "temperature": 1.5,
     "presentation": 2.0,
     "price": "$$",
-    "notes": "This isn't just a brewery. It's a hidden burger gem! This little classic with class burger kills it and pairs well with their excellent brews."
+    "notes": "This isn't just a brewery, it's a hidden burger gem! This little classic with class burger kills it and pairs well with their excellent brews."
   },
   {
-    "id": 8,
+    "id": "jack",
     "restaurant": "Jack Brown's Beer and Burger Joint",
     "plate": "Dr Gonzo",
     "taste": 8.0,
@@ -41,10 +41,10 @@
     "temperature": 1.0,
     "presentation": 2.5,
     "price": "$$",
-    "notes": "King of the classic diner style burgers. This place combines not only the best diner style burgers in town but also adds the most original twists on classics. They are cooked right in front of you on the flattop and come in hot."
+    "notes": "King of the classic diner style burgers. This place combines not only the best diner style burgers in town but also adds the most original twists on classics. They are cooked right in front of you on the flattop and come in hot!"
   },
   {
-    "id": 6,
+    "id": "republic",
     "restaurant": "Burger Republic",
     "plate": "XXX",
     "taste": 9.0,
@@ -52,10 +52,10 @@
     "temperature": 2.0,
     "presentation": 1.0,
     "price": "$$",
-    "notes": "Food porn at its finest. The Triple decker burger is large and super tasty. It's a little hard to handle but with some care only a little messy."
+    "notes": "Food porn at its finest. The Triple decker burger is large and super tasty. It's a little messy so handle with care"
   },
   {
-    "id": 5,
+    "id": "union",
     "restaurant": "Union Common",
     "plate": "The Union Rock Burger",
     "taste": 9,
@@ -66,7 +66,7 @@
     "notes": "A quality cheese burger cooked by a quality steakhouse. The meat is cooked nicely with great flavor and is not overpowered by the grilled onions or melty goodness of the cheese."
   },
   {
-    "id": 4,
+    "id": "t-row",
     "restaurant": "The Row",
     "plate": "The Row Burger",
     "taste": 8.0,
@@ -74,10 +74,10 @@
     "temperature": 3.0,
     "presentation": 2.0,
     "price": "$$",
-    "notes": "A solid and southern cheeseburger. The meat is quality cooked perfectly and paired with house made pimento cheese and a fried green tomato."
+    "notes": "A solid and southern cheeseburger. The meat is quality, cooked perfectly, paired with house made pimento cheese and a fried green tomato."
   },
   {
-    "id": 3,
+    "id": "husk",
     "restaurant": "Husk",
     "plate": "Cheeseburger",
     "taste": 9.0,
@@ -88,7 +88,7 @@
     "notes": "Superb cheeseburger as you can only expect from a Husk chef. It's a classic style executed masterfully. The fries were lacking as was any originality, but it won't slow down your appetite."
   },
   {
-    "id": 2,
+    "id": "brew",
     "restaurant": "Tennessee Brew Works",
     "plate": "Five Beer Burger",
     "taste": 9.5,
@@ -99,7 +99,7 @@
     "notes": "The 2nd hidden brewery burger. This burger is loaded with rich and savory flavors. At first is almost seems too potent but it finishes really well. The meat is super juicy and tender and the bread holds up surprisingly well. Even the fries are loaded with seasoned flavor."
   },
   {
-    "id": 1,
+    "id": "emmy",
     "restaurant": "Emmy 2",
     "plate": "Le Bigg Matt",
     "taste": 10.0,

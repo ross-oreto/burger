@@ -5,7 +5,7 @@ import com.fasterxml.jackson.module.kotlin.readValue
 import java.io.File
 import java.nio.file.Paths
 
-class Burger(val id: Int
+class Burger(val id: String
              , val restaurant: String
              , val plate: String
              , val taste: Double
@@ -20,14 +20,18 @@ class Burger(val id: Int
     companion object Burgers {
         private val mapper = jacksonObjectMapper()
 
-        val list: List<Burger> = mapper.readValue(
+        val list: List<Burger> = (mapper.readValue(
                 File(Paths.get("burgers.json").toString())
-        )
+        ) as List<Burger>).sortedByDescending { it.total }
 
-        fun get(id: Int): Burger? {
+        fun get(id: String): Burger? {
             return list.find {
                 it.id == id
             }
+        }
+
+        fun at(index: Int): Burger? {
+            return list.getOrNull(index - 1)
         }
     }
 }

@@ -1,4 +1,4 @@
-@args (Integer index, Integer total, String path, RockerContent extracss, RockerBody body)
+@args (String id, RockerContent extraJs, RockerContent extraCss, RockerBody body)
 <html lang="en">
 <head>
     <title>Burgers</title>
@@ -7,18 +7,16 @@
           integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link href='https://fonts.googleapis.com/css?family=Finger Paint' rel='stylesheet'>
     <link rel="stylesheet" type="text/css" href="/assets/css/burgers/app.css">
-    @extracss
+    @extraCss
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://kit.fontawesome.com/02594425ac.js"></script>
     <script src="/assets/js/infinite-scroll.pkgd.min.js"></script>
-    <script type="application/javascript">var index = @index; var total = @total; var path = '@path';</script>
-    <script src="/assets/js/app.js" defer></script>
 </head>
 <body>
     <div class="container-fluid">
-        <div class="burger-container burger-@index">
+        <div class="burger-container @id">
             @body
-<!--            @if (index > 0) {-->
+<!--            @if (id == "landing") {-->
 <!--            <div class="center text-center scroll-btn">-->
 <!--                <i class="fas fa-arrow-circle-down fa-3x"></i>-->
 <!--            </div>-->
@@ -26,4 +24,5 @@
         </div>
     </div>
 </body>
+@extraJs
 </html>
