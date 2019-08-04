@@ -1,56 +1,59 @@
-@args(Integer index, Integer total, Integer year, String path)
+@args(Integer index, Integer total, Integer year, io.oreto.burger.Burger burger, String path)
 
 @extracss => {
     <link rel="stylesheet" href='/assets/css/burgers/@year/burgers.css' >
 }
 
 @views.main.template(index, total, path, extracss) -> {
-<div class="burger">
+<div class="burger d-flex">
     @if (index > 0 && index <= 10) {
-        <div class="center text-center scroll-up-btn">
-            @if (index == 10) {
-                <a href="@path"><i class="fas fa-arrow-circle-up fa-3x"></i></a>
-            } else {
-                <a href="@path/@(index+1)"><i class="fas fa-arrow-circle-up fa-3x"></i></a>
-            }
-        </div>
-        <div class="card center">
+        <div class="card center flex-grow-1 flex-lg-grow-0">
             <div class="card-body">
-                <h1 class="card-title text-center">#@index</h1>
-                <p class="card-text">Good AF</p>
+                <h1 class="card-title text-center"><strong class="rank-tag">#@?burger.getId()</strong> @?burger.getRestaurant()</h1>
+                <h2 class="card-title text-center"><u>@?burger.getPlate()</u></h2>
+                <h2><u>Score: @?burger.getTotal()</u></h2>
+                <ul class="card-title">
+                    <li>Taste: @?burger.getTaste()</li>
+                    <li>Quality: @?burger.getQuality()</li>
+                    <li>Temperature: @?burger.getTemperature()</li>
+                    <li>Presentation: @?burger.getPresentation()</li>
+                </ul>
+                <p class="card-text">
+                    @?burger.getNotes()
+                </p>
+                <img src="/assets/css/burgers/@year/burger-@(index)-sm.jpg"
+                     class="d-lg-none d-xl-none"
+                     alt="/assets/css/burgers/@year/burger-@(index)-sm.jpg">
             </div>
         </div>
     } else if (index <= 0) {
-        <div class="center text-center scroll-up-btn">
-            <a href="@path/@(index+1)"><i class="fas fa-arrow-circle-up fa-3x"></i></a>
-        </div>
-        <div class="card center">
-            <div class="card-body text-center">
-                <h1 class="card-title text-center">The Tasters</h1>
-                <p class="card-text">A little about the authors and taste judges</p>
+        <div class="row center flex-grow-1 flex-lg-grow-0">
+            <div class="card col-12 flex-grow-1 flex-lg-grow-0">
+                <div class="card-body text-center">
+                    <h1 class="card-title text-center">The Tasters</h1>
+                    <p class="card-text">A little about the authors and taste judges</p>
+                </div>
             </div>
-        </div>
-        <br>
-        <div class="card center">
-            <div class="card-body">
-                <h1 class="card-title text-center">Callum M.</h1>
-                <p class="card-text">Canadian</p>
+            <div class="card col-md-6 col-sm-12 flex-grow-1 flex-lg-grow-0">
+                <div class="card-body">
+                    <h1 class="card-title text-center">Callum M.</h1>
+                    <p class="card-text">Canadian</p>
+                </div>
             </div>
-        </div>
-        <br>
-        <div class="card center">
-            <div class="card-body">
-                <h1 class="card-title text-center">Ross Oreto</h1>
-                <p class="card-text">American</p>
+            <div class="card col-md-6 col-sm-12 flex-grow-1 flex-lg-grow-0">
+                <div class="card-body">
+                    <h1 class="card-title text-center">Ross Oreto</h1>
+                    <p class="card-text">American</p>
+                </div>
             </div>
         </div>
     } else {
-        <div class="card center">
+        <div class="card center flex-grow-1 flex-lg-grow-0">
             <div class="card-body">
                 <h1 class="card-title text-center">The definitive @year Nashville, TN <br>burger countdown</h1>
                 <p class="card-text">
                     We personally tried several of Nashville's most recommended burgers and ranked them according to a well thought out scoring system.
-                    <br><br><br>
+                    <br><br>
                     Burgers were ranked on the following criteria:
                     <ul>
                         <li>

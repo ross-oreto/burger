@@ -19,15 +19,15 @@ class AppController {
     @GET
     fun index(@PathParam year: Int, context: Context): Any {
         val pages: Int = App.info.environment.config.getInt("burger.pages").or(defaultPages)
-        return views.burger.template(pages, pages, year, context.pathString())
+        return views.burger.template(pages, pages, year, null, context.pathString())
     }
 
     @GET
     @Path("/{page}")
     fun page(@PathParam year: Int, @PathParam page: Int?, context: Context): Any {
-        val test = context.path()
-        val t = context.pathString()
         val pages: Int = App.info.environment.config.getInt("burger.pages").or(defaultPages)
-        return views.burger.template(page ?: 11, pages, year, getParentRoutePath(context))
+        val index: Int = page ?: 11
+        val burger: Burger? = Burger.get(index)
+        return views.burger.template(index, pages, year, burger, getParentRoutePath(context))
     }
 }

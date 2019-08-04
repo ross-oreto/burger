@@ -1,15 +1,17 @@
 var infScroll = new InfiniteScroll( '.container-fluid', {
     path: function () {
-        if (this.loadCount < window.total) {
+        if (window.index > 0) {
             return window.path +
                 (window.location.href.endsWith('/') ? '' : '/') +
-                (window.total - this.pageIndex);
+                (window.index - 1);
         }
     },
-    append: '.burger-container',
-    button: '.scroll-btn',
-    scrollThreshold: false,
-    loadOnScroll: false
+    append: '.burger-container'
+    , button: '.scroll-btn'
+});
+
+infScroll.on( 'request', function( path ) {
+    window.index--;
 });
 
 $(document).ready(function(){
