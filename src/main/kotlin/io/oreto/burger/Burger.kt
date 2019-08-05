@@ -8,12 +8,17 @@ import java.nio.file.Paths
 class Burger(val id: String
              , val restaurant: String
              , val plate: String
-             , val taste: Double
-             , val quality: Double
-             , val temperature: Double
-             , val presentation: Double
+             , val tastes: List<Double>
+             , val qualities: List<Double>
+             , val temperatures: List<Double>
+             , val presentations: List<Double>
              , val price: String
              , val notes: String) {
+
+    val taste: Double = tastes.sum() / tastes.size
+    val quality: Double = qualities.sum() / qualities.size
+    val temperature: Double = temperatures.sum() / temperatures.size
+    val presentation: Double = presentations.sum() / presentations.size
 
     val total: Double = taste + quality + temperature + presentation
 

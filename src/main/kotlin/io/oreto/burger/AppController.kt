@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory
 @Path("/burgers/{year}")
 class AppController {
     private val log: Logger = LoggerFactory.getLogger(AppController::class.java)
-    private val defaultPages = 11
+    private val defaultPages = Burger.list.size + 1
 
     fun getParentRoutePath(context: Context): String {
         return context.pathString().substring(0, context.pathString().lastIndexOf('/'))
@@ -19,7 +19,7 @@ class AppController {
     @GET
     fun index(@PathParam year: Int, context: Context): Any {
         val pages: Int = App.info.environment.config.getInt("burger.pages").or(defaultPages)
-        return views.burger.template(null, "landing", pages, pages, year, context.pathString())
+        return views.burger.template(null, "landing", pages, pages, year, null, context.pathString())
     }
 
     @GET
@@ -29,6 +29,6 @@ class AppController {
         val index: Int = page ?: defaultPages
         val burger: Burger? = Burger.at(index)
         val pageId: String = burger?.id ?: (if (index == 0) "credits" else "landing")
-        return views.burger.template(burger, pageId, index, pages, year, getParentRoutePath(context))
+        return views.burger.template(burger, pageId, index, pages, year, Taster.list, getParentRoutePath(context))
     }
 }

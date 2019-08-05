@@ -1,0 +1,18 @@
+[
+  {
+    "id": 0,
+    "name": "Callum M.",
+    "nationality": "Canadian",
+    "occupation": "CPA",
+    "birthPlace": "Vancouver",
+    "shortName": "callum"
+  },
+  {
+    "id": 1,
+    "name": "Ross Oreto",
+    "nationality": "American",
+    "occupation": "Software Developer",
+    "birthPlace": "Chattanooga, TN",
+    "shortName": "ross"
+  }
+]

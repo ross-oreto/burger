@@ -1,8 +1,9 @@
+var trailingSlash = window.location.href.endsWith('/');
 var infScroll = new InfiniteScroll( '.container-fluid', {
     path: function () {
         if (window.index > 0) {
             return window.path +
-                (window.location.href.endsWith('/') ? '' : '/') +
+                (trailingSlash ? '' : '/') +
                 (window.index - 1);
         }
     },

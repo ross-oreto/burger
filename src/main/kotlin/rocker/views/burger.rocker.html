@@ -1,4 +1,4 @@
-@args(io.oreto.burger.Burger burger, String id, Integer index, Integer total, Integer year, String path)
+@args(io.oreto.burger.Burger burger, String id, Integer index, Integer total, Integer year, java.util.List<io.oreto.burger.Taster> tasters, String path)
 
 @extraCss => {
     <link rel="stylesheet" href='/assets/css/burgers/@year/burgers.css' >
@@ -19,22 +19,22 @@
                     We personally tried several of Nashville's most recommended burgers and ranked them according to a well thought out scoring system.
                     <br><br>
                     Burgers were ranked on the following criteria:
-                <ul>
-                    <li>
-                        <u>Taste (0-10):</u> The overall taste and finish of the burger.
-                    </li><br>
-                    <li>
-                        <u>Quality (0-5):</u> The quality, freshness of the ingredients, and the craftsmanship of the burger.
-                    </li><br>
-                    <li>
-                        <u>Temperature (0-3):</u> The temperature of the meat, how well the natural juices and flavor of the meat is announced.
-                    </li><br>
-                    <li>
-                        <u>Presentation (0-2):</u> Not just how well the burger looks plated,
-                        but how original the sandwich is and how easy it is to handle and savor throughout the meal.
-                    </li>
-                </ul>
-                <i>20 is the highest possible total and they are scored in .5 point increments</i>
+                    <ul>
+                        <li>
+                            <u>Taste (0-10):</u> The overall taste and finish of the burger.
+                        </li><br>
+                        <li>
+                            <u>Quality (0-5):</u> The quality, freshness of the ingredients, and the craftsmanship of the burger.
+                        </li><br>
+                        <li>
+                            <u>Temperature (0-3):</u> The temperature of the meat, how well the natural juices and flavor of the meat is announced.
+                        </li><br>
+                        <li>
+                            <u>Presentation (0-2):</u> Not just how well the burger looks plated,
+                            but how original the sandwich is and how easy it is to handle and savor throughout the meal.
+                        </li>
+                    </ul>
+                    <i>20 is the highest possible total and they are scored in .5 point increments</i>
                 </p>
             </div>
         </div>
@@ -47,24 +47,22 @@
                 </div>
             </div>
             <div class="card-deck center w-100">
-                <div class="card flex-grow-1">
-                    <div class="card-header">
-                        <h1>Callum M. <img src="/assets/image/callum-sm.jpg" alt="callum-sm.jpg" class="float-center"></h1>
+                @for (taster : tasters) {
+                    <div class="card flex-grow-1">
+                        <div class="card-header">
+                            <h1>
+                                @taster.getName()
+                                <img src="/assets/image/@(taster.getShortName())-sm.jpg"
+                                                       alt="/assets/image/@(taster.getShortName())-sm.jpg"
+                                                       class="float-center">
+                            </h1>
+                        </div>
+                        <div class="card-body">
+                            <h1 class="card-title">@taster.getNationality()</h1>
+                            <p class="card-text">@taster.getOccupation()</p>
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <h1 class="card-title">Canadian</h1>
-                        <p class="card-text">CPA</p>
-                    </div>
-                </div>
-                <div class="card flex-grow-1">
-                    <div class="card-header">
-                        <h1>Ross Oreto <img src="/assets/image/ross-sm.jpg" alt="/assets/image/ross-sm.jpg" class="float-center"></h1>
-                    </div>
-                    <div class="card-body">
-                        <h1 class="card-title">American</h1>
-                        <p class="card-text">Software developer</p>
-                    </div>
-                </div>
+                }
             </div>
         </div>
     } else {
@@ -78,6 +76,7 @@
                     <li>Quality: @?burger.getQuality()</li>
                     <li>Temperature: @?burger.getTemperature()</li>
                     <li>Presentation: @?burger.getPresentation()</li>
+                    <li>Price: @?burger.getPrice()</li>
                 </ul>
                 <p class="card-text">
                     @?burger.getNotes()
