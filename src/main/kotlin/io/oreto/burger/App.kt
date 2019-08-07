@@ -11,17 +11,16 @@ import java.nio.file.Paths
 
 class App :Kooby({
 
-    val config: Config = environment.config
-
     routerOptions { isIgnoreTrailingSlash = true }
 
     serverOptions {
-        port = System.getenv("PORT")?.toInt() ?: config.getInt("server.port")
+        port = System.getenv("PORT")?.toInt() ?: environment.config.getInt("server.port")
     }
 
     onStarting {
         log.info("starting app")
         info = appInfo(environment, serverOptions, contextPath)
+        App.config = config
     }
 
     onStarted {
@@ -37,10 +36,10 @@ class App :Kooby({
 
     install(RockerModule())
     mvc(AppController())
-
 }) {
     companion object {
         lateinit var info: AppInfo
+        lateinit var config: Config
 
         fun appInfo(env: Environment
                     , serverOptions: ServerOptions?
@@ -54,20 +53,12 @@ class App :Kooby({
             return AppInfo(env, scheme, host, port, contextPath, baseUrl)
         }
 
-        fun exists(path: String, config: Config = App.info.environment.config): Boolean {
+        fun exists(path: String, config: Config = App.config): Boolean {
             return try {
                 config.hasPath(path)
             } catch (e: ConfigException.BadPath) {
                 false
             }
-        }
-
-        fun prop(path: String): String? {
-            return if (exists(path)) info.environment.config.getString(path) else null
-        }
-
-        fun propInt(path: String): Int? {
-            return if (exists(path)) info.environment.config.getInt(path) else null
         }
     }
 
