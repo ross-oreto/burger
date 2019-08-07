@@ -86,6 +86,30 @@
     -o-background-size: cover;
 }
 
+.frisco {
+    background: black url("frisco.jpg") no-repeat fixed center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.pinewood {
+    background: black url("pinewood.jpg") no-repeat fixed center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.shack {
+    background: black url("shack.jpg") no-repeat fixed center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
 .credits {
     background: black url("credits.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;

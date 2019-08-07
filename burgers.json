@@ -14,7 +14,7 @@
     "id": "melrose",
     "restaurant": "M.L. Rose at Melrose",
     "plate": "The Animal",
-    "tastes": [8.0, 8.0],
+    "tastes": [8.0, 7.0],
     "qualities": [3.5, 2.0],
     "temperatures": [1.0, 1.0],
     "presentations": [1.0, 2.0],
