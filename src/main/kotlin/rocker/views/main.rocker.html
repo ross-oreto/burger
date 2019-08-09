@@ -1,16 +1,9 @@
-@args (String id, RockerContent extraJs, RockerContent extraCss, RockerBody body)
+@args (String id, io.oreto.burger.App.Application app, RockerContent js, RockerContent css, RockerBody body)
 <html lang="en">
 <head>
     <title>Burgers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-    <link href='https://fonts.googleapis.com/css?family=Finger Paint' rel='stylesheet'>
-    <link rel="stylesheet" type="text/css" href="/assets/css/burgers/app.css">
-    @extraCss
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://kit.fontawesome.com/02594425ac.js"></script>
-    <script src="/assets/js/infinite-scroll.pkgd.min.js"></script>
+    @css
 </head>
 <body>
     <div class="container-fluid">
@@ -24,5 +17,5 @@
         </div>
     </div>
 </body>
-@extraJs
+@js
 </html>

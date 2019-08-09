@@ -26,7 +26,7 @@ class AppController {
     @GET
     fun index(@PathParam year: Int, context: Context): Any {
         val pages: Int = App.config.getInt("burger.pages").or(defaultPages)
-        return views.burger.template(null, "landing", pages, pages, year, null, getBaseRoutePath(context))
+        return views.burger.template(null, "landing", pages, pages, year, null, getBaseRoutePath(context), App.app)
     }
 
     @GET
@@ -36,6 +36,6 @@ class AppController {
         val index: Int = page ?: defaultPages
         val burger: Burger? = Burger.at(index)
         val pageId: String = burger?.id ?: (if (index == 0) "credits" else "landing")
-        return views.burger.template(burger, pageId, index, pages, year, Taster.list, getBaseRoutePath(context))
+        return views.burger.template(burger, pageId, index, pages, year, Taster.list, getBaseRoutePath(context), App.app)
     }
 }

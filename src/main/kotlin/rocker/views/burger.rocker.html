@@ -1,15 +1,28 @@
-@args(io.oreto.burger.Burger burger, String id, Integer index, Integer total, Integer year, java.util.List<io.oreto.burger.Taster> tasters, String path)
+@args(io.oreto.burger.Burger burger
+, String id
+, Integer index
+, Integer total
+, Integer year
+, java.util.List<io.oreto.burger.Taster> tasters
+, String path
+, io.oreto.burger.App.Application app)
 
-@extraCss => {
-    <link rel="stylesheet" href='/assets/css/burgers/@year/burgers.css' >
+@css => {
+    <link rel="stylesheet" href="/asset/css?package=burgers">
 }
 
-@extraJs => {
-    <script type="application/javascript">var index = @index; var total = @total; var year = @year; var path = '@path';</script>
-    <script type="application/javascript" src="/assets/js/app.js" defer></script>
+@js => {
+    <script type="application/javascript">
+        var index = @index;
+        var total = @total;
+        var year = @year;
+        var path = '@path';
+    </script>
+
+    <script type="application/javascript" src="/asset/js?package=burgers"></script>
 }
 
-@views.main.template(id, extraJs, extraCss) -> {
+@views.main.template(id, app, js, css) -> {
 <div class="burger d-flex">
     @if (id == "landing") {
         <div class="card center flex-grow-1 flex-lg-grow-0">
