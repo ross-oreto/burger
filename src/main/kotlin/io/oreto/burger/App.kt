@@ -7,7 +7,11 @@ import io.jooby.Kooby
 import io.jooby.ServerOptions
 import io.jooby.rocker.RockerModule
 import io.jooby.runApp
+import java.io.BufferedReader
 import java.io.File
+import java.io.InputStreamReader
+import java.nio.file.Paths
+
 
 class App :Kooby({
 
@@ -35,9 +39,11 @@ class App :Kooby({
     assets("/assets/*", config.getString("assets.path"))
 
     install(RockerModule())
+    mvc(AssetController())
     mvc(AppController())
 }) {
     companion object {
+        val IS_WINDOWS = System.getProperty("os.name").toLowerCase().startsWith("windows")
         lateinit var app: Application
         lateinit var config: Config
 
@@ -75,34 +81,72 @@ class App :Kooby({
                     conf.getObject("assets.package")
                     .entries
                     .map {
-                        @Suppress("UNCHECKED_CAST") // this should be the structure of the config
-                        val assetMap = it.value.unwrapped() as Map<String, List<String>>
-                        Asset(it.key
-                            , assetMap.getOrDefault("css", listOf())
-                            , assetMap.getOrDefault("js", listOf())
-                                , conf.getConfig("assets")) }
+                        Asset(it.key, conf.getConfig("assets")) }
                 else listOf()
 
         fun getPackage(name: String): Asset? {
             return assets.findLast { it.packageName == name }
         }
 
-        class Asset(val packageName: String, val css: List<String>, val js: List<String>, val conf: Config) {
-            val path = conf.getString("path")
-            val cssPackage: String = css.map {
-                if (it.endsWith(".css"))
-                    File("$path/$it").readText()
-                else { }
-            }.joinToString("\n")
+        class Asset(val packageName: String, val conf: Config) {
 
-            val jsPackage: String = css.map {
-                File("$path/$it").readText()
-            }.joinToString("\n")
+            val packages = mapOf(
+                    Types.css.name to minify(getPackageFiles(Types.css.name, packageName, conf))
+                    , Types.js.name to minify(getPackageFiles(Types.js.name, packageName, conf))
+            )
 
             companion object {
-                fun getPackageCss(conf: Config, packageName: String, names: List<String> = listOf()): String {
-                    return ""
+                fun getPackageFiles(type: String
+                                    , packageName: String
+                                    , conf: Config
+                                    , files: MutableList<File> = mutableListOf()
+                                    , names: MutableList<String> = mutableListOf()): List<File> {
+                    if (!names.contains(packageName)) {
+                        names.add(packageName)
+
+                        val path = conf.getString("path")
+                        if (exists("package.$packageName.$type", conf)) {
+                            conf.getStringList("package.$packageName.$type")
+                                    .forEach { name: String ->
+                                        if (name.endsWith(".$type")) {
+                                            val newFile: File = File("$path/$name")
+                                            if (newFile.exists() && files.none { f: File -> f.path == newFile.path }) {
+                                                files.add(newFile)
+                                            }
+                                        } else {
+                                            getPackageFiles(type, name, conf, files, names)
+                                        }
+                                    }
+                        }
+                    }
+                    return files
                 }
+
+                fun combine(files: List<File>): String {
+                    return if (files.isNotEmpty()) {  files.joinToString("\n") { it.readText() } } else ""
+                }
+
+                fun minify(files: List<File>): String {
+                    return if (files.isNotEmpty()) {
+                        val exe = Paths.get(".", "minify", "minify").toString() +
+                                if (IS_WINDOWS) ".exe" else ""
+
+                        val fileNames = files.map { it.path }.joinToString(" ") { it }
+                        val cmd = "$exe $fileNames"
+                        println(cmd)
+
+                        val process: Process = Runtime.getRuntime().exec(cmd)
+                        val reader = BufferedReader(
+                                InputStreamReader(process.inputStream))
+                        val min = reader.readLines().joinToString("")
+                        reader.close()
+                        min
+                    } else ""
+                }
+            }
+
+            enum class Types {
+                css, js
             }
         }
 

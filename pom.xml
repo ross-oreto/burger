@@ -131,7 +131,7 @@
                 <artifactId>jooby-maven-plugin</artifactId>
                 <version>${jooby.version}</version>
                 <configuration>
-                    <compileExtensions>java,kt,html</compileExtensions>
+                    <compileExtensions>java,kt,html,js,css</compileExtensions>
 <!--                    <port>8888</port>-->
                 </configuration>
             </plugin>

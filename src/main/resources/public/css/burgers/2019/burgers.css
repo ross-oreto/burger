@@ -1,5 +1,5 @@
 .landing {
-    background: black url("landing.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/landing.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -7,7 +7,7 @@
 }
 
 .hugh {
-    background: black url("hugh.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/hugh.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -15,7 +15,7 @@
 }
 
 .melrose {
-    background: black url("melrose.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/melrose.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -23,7 +23,7 @@
 }
 
 .jack {
-    background: black url("jack.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/jack.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -31,7 +31,7 @@
 }
 
 .mill {
-    background: black url("mill.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/mill.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -39,7 +39,7 @@
 }
 
 .republic {
-    background: black url("republic.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/republic.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -47,7 +47,7 @@
 }
 
 .union {
-    background: black url("union.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/union.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -55,7 +55,7 @@
 }
 
 .t-row {
-    background: black url("t-row.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/t-row.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -63,7 +63,7 @@
 }
 
 .husk {
-    background: black url("husk.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/husk.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -71,7 +71,7 @@
 }
 
 .brew {
-    background: black url("brew.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/brew.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -79,7 +79,7 @@
 }
 
 .emmy {
-    background: black url("emmy.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/emmy.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -87,7 +87,7 @@
 }
 
 .frisco {
-    background: black url("frisco.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/frisco.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -95,7 +95,7 @@
 }
 
 .pinewood {
-    background: black url("pinewood.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/pinewood.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -103,7 +103,7 @@
 }
 
 .shack {
-    background: black url("shack.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/shack.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -111,7 +111,7 @@
 }
 
 .credits {
-    background: black url("credits.jpg") no-repeat fixed center center;
+    background: black url("/assets/css/burgers/2019/credits.jpg") no-repeat fixed center center;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
