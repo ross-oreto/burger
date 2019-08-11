@@ -20,4 +20,14 @@ class AssetController {
         context.setResponseType(mediaTypeMap.getOrDefault(type, MediaType.TEXT))
         return App.app.getPackage(packageName)?.packages?.get(type)?.contents ?: ""
     }
+
+    @GET("/{type}/{packageName}/files")
+    fun files(@PathParam type: String, @PathParam packageName: String, context: Context): List<String>? {
+        context.setResponseType(MediaType.JSON)
+        val assetsPath = App.config.getString("assets.path")
+        val assetsPattern = App.config.getString("assets.pattern")?.replace("/*", "")
+        return App.app.getPackage(packageName)?.packages?.get(type)?.files?.map {
+            it.path.replace(assetsPath, assetsPattern ?: "/assets")
+        }
+    }
 }

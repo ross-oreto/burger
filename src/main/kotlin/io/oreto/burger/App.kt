@@ -38,7 +38,7 @@ class App :Kooby({
         log.info("stopping app")
     }
 
-    assets("/assets/*", config.getString("assets.path"))
+    assets(config.getString("assets.pattern"), config.getString("assets.path"))
 
     install(RockerModule())
     mvc(AssetController())
