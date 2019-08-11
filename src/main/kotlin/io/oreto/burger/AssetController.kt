@@ -18,7 +18,6 @@ class AssetController {
     @GET("/{type}/{packageName}")
     fun index(@PathParam type: String, @PathParam packageName: String, context: Context): String {
         context.setResponseType(mediaTypeMap.getOrDefault(type, MediaType.TEXT))
-        val test = App.app.getPackage(packageName)?.packages?.getOrDefault(type, "")
-        return App.app.getPackage(packageName)?.packages?.getOrDefault(type, "") ?: ""
+        return App.app.getPackage(packageName)?.packages?.get(type)?.contents ?: ""
     }
 }

@@ -7,6 +7,8 @@ import io.jooby.Kooby
 import io.jooby.ServerOptions
 import io.jooby.rocker.RockerModule
 import io.jooby.runApp
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -76,27 +78,42 @@ class App :Kooby({
                        , val baseUrl: String) {
 
         val conf: Config = environment.config
+
+        private val assetsConfig = conf.getConfig("assets")
+        private val min = environment.isActive(ENV.uat.name) || environment.isActive(ENV.prod.name)
         val assets: List<Asset> =
                 if (exists("assets.package", conf))
                     conf.getObject("assets.package")
                     .entries
                     .map {
-                        Asset(it.key, conf.getConfig("assets")) }
+                        Asset(it.key, assetsConfig, min) }
                 else listOf()
 
         fun getPackage(name: String): Asset? {
             return assets.findLast { it.packageName == name }
         }
 
-        class Asset(val packageName: String, val conf: Config) {
+        class Asset(val packageName: String, val conf: Config, val minify: Boolean = false) {
+
+            data class Pack(val name: String, val type: String, val files: List<File>, val minify: Boolean = false) {
+                var contents = ""
+
+                init {
+                    GlobalScope.launch { contents = if(minify) minify(files) else combine(files) }
+                }
+            }
 
             val packages = mapOf(
-                    Types.css.name to minify(getPackageFiles(Types.css.name, packageName, conf))
-                    , Types.js.name to minify(getPackageFiles(Types.js.name, packageName, conf))
+                    Types.css.name to Pack(packageName
+                                    , Types.css.name
+                                    , packFiles(Types.css.name, packageName, conf))
+                    , Types.js.name to Pack(packageName
+                                    , Types.js.name
+                                    , packFiles(Types.js.name, packageName, conf))
             )
 
             companion object {
-                fun getPackageFiles(type: String
+                fun packFiles(type: String
                                     , packageName: String
                                     , conf: Config
                                     , files: MutableList<File> = mutableListOf()
@@ -109,12 +126,12 @@ class App :Kooby({
                             conf.getStringList("package.$packageName.$type")
                                     .forEach { name: String ->
                                         if (name.endsWith(".$type")) {
-                                            val newFile: File = File("$path/$name")
+                                            val newFile = File("$path/$name")
                                             if (newFile.exists() && files.none { f: File -> f.path == newFile.path }) {
                                                 files.add(newFile)
                                             }
                                         } else {
-                                            getPackageFiles(type, name, conf, files, names)
+                                            packFiles(type, name, conf, files, names)
                                         }
                                     }
                         }
@@ -138,7 +155,7 @@ class App :Kooby({
                         val process: Process = Runtime.getRuntime().exec(cmd)
                         val reader = BufferedReader(
                                 InputStreamReader(process.inputStream))
-                        val min = reader.readLines().joinToString("")
+                        val min = reader.readLines().joinToString("\n")
                         reader.close()
                         min
                     } else ""

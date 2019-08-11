@@ -135,12 +135,12 @@
     "id": "chagos",
     "restaurant": "Chago's Cantina at Belmont",
     "plate": "Cheeseburger",
-    "tastes": [8.0],
-    "qualities": [3.5],
-    "temperatures": [2.0],
-    "presentations": [1.5],
+    "tastes": [8.0, 7.5],
+    "qualities": [3.5, 3.5],
+    "temperatures": [2.0, 2.0],
+    "presentations": [1.5, 2.5],
     "price": "$$",
-    "notes": "This great little Mexican kitchen really knows the gringos because they added an awesome cheeseburger to the menu. Not only did they add one but it quickly became one of Nashville's favorites!"
+    "notes": "This great little Mexican kitchen really knows the gringos because they added an awesome cheeseburger to the menu. Not only did they add one but it quickly became one of Nashville's favorites! The saucy burger has surprisingly good flavor for the patty size."
   },
   {
     "id": "shack",

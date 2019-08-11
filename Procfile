@@ -1,1 +1,1 @@
-web: java $JAVA_OPTS -cp target/classes/:target/dependency/* io.oreto.burger.AppKt
+web: java $JAVA_OPTS -cp target/classes/:target/dependency/* io.oreto.burger.AppKt application.env=prod
