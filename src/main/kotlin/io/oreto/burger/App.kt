@@ -106,10 +106,12 @@ class App :Kooby({
             val packages = mapOf(
                     Types.css.name to Pack(packageName
                                     , Types.css.name
-                                    , packFiles(Types.css.name, packageName, conf))
+                                    , packFiles(Types.css.name, packageName, conf)
+                                    , minify)
                     , Types.js.name to Pack(packageName
                                     , Types.js.name
-                                    , packFiles(Types.js.name, packageName, conf))
+                                    , packFiles(Types.js.name, packageName, conf)
+                                    , minify)
             )
 
             companion object {
