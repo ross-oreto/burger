@@ -9,7 +9,6 @@ import io.jooby.rocker.RockerModule
 import io.jooby.runApp
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import org.slf4j.Logger
 import java.io.BufferedReader
 import java.io.File
 import java.io.InputStreamReader
@@ -43,13 +42,12 @@ class App :Kooby({
 
     install(RockerModule())
     mvc(AssetController())
-    mvc(AppController())
+    mvc(BurgerController())
 }) {
     companion object {
         val IS_WINDOWS = System.getProperty("os.name").toLowerCase().startsWith("windows")
         lateinit var app: Application
         lateinit var config: Config
-        lateinit var log: Logger
 
         fun application(env: Environment
                     , serverOptions: ServerOptions?
