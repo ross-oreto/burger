@@ -77,11 +77,11 @@ class App :Kooby({
                        , val path: String
                        , val baseUrl: String) {
 
-        val conf: Config = environment.config
+        private val conf: Config = environment.config
 
         private val assetsConfig = conf.getConfig("assets")
         private val min = environment.isActive(ENV.uat.name) || environment.isActive(ENV.prod.name)
-        val assets: List<Asset> =
+        private val assets: List<Asset> =
                 if (exists("assets.package", conf))
                     conf.getObject("assets.package")
                     .entries
