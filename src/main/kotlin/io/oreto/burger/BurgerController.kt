@@ -35,6 +35,7 @@ class BurgerController : AppController() {
     @GET
     @Path("/{page}")
     fun page(@PathParam year: Int, @PathParam page: Int?, context: Context): Any {
+        val server: Server = context.attribute("server")
         val pages: Int = App.config.getInt("burger.pages").or(defaultPages)
         val index: Int = page ?: defaultPages
         val burger: Burger? = Burger.at(index)

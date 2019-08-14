@@ -2,11 +2,8 @@ package io.oreto.burger
 
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigException
-import io.jooby.Environment
-import io.jooby.Kooby
-import io.jooby.ServerOptions
+import io.jooby.*
 import io.jooby.rocker.RockerModule
-import io.jooby.runApp
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
@@ -36,6 +33,18 @@ class App :Kooby({
 
     onStop {
         log.info("stopping app")
+    }
+
+    before {
+        ctx: Context ->
+        ctx.attribute("server", AppController.Server(app
+                , AppController.Server.Page(
+                        ctx.pathString()
+                        , ctx.route.pattern
+                        , ctx.pathMap()
+                        , ctx.queryMap()
+                ), listOf())
+        )
     }
 
     assets(config.getString("assets.pattern"), config.getString("assets.path"))
