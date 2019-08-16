@@ -2,8 +2,11 @@ package io.oreto.burger
 
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigException
-import io.jooby.*
+import io.jooby.Environment
+import io.jooby.Kooby
+import io.jooby.ServerOptions
 import io.jooby.rocker.RockerModule
+import io.jooby.runApp
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
@@ -14,7 +17,7 @@ import java.nio.file.Paths
 
 class App :Kooby({
 
-    routerOptions { isIgnoreTrailingSlash = true }
+    routerOptions { ignoreTrailingSlash = true }
 
     serverOptions {
         port = System.getenv("PORT")?.toInt() ?: environment.config.getInt("server.port")
@@ -35,23 +38,11 @@ class App :Kooby({
         log.info("stopping app")
     }
 
-    before {
-        ctx: Context ->
-        ctx.attribute("server", AppController.Server(app
-                , AppController.Server.Page(
-                        ctx.pathString()
-                        , ctx.route.pattern
-                        , ctx.pathMap()
-                        , ctx.queryMap()
-                ), listOf())
-        )
-    }
-
     assets(config.getString("assets.pattern"), config.getString("assets.path"))
 
     install(RockerModule())
     mvc(AssetController())
-    mvc(BurgerController())
+    use("/burgers/{year}", BurgerModule())
 }) {
     companion object {
         val IS_WINDOWS = System.getProperty("os.name").toLowerCase().startsWith("windows")

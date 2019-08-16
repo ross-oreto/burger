@@ -9,8 +9,8 @@ import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
 @Path("/asset")
-class AssetController : AppController() {
-    override val log: Logger
+class AssetController  {
+     val log: Logger
         get() = LoggerFactory.getLogger(this.javaClass)
 
     val mediaTypeMap = mapOf(App.Application.Asset.Types.css.name to MediaType.CSS

@@ -1,4 +1,4 @@
-@args (String id, io.oreto.burger.App.Application app, RockerContent js, RockerContent css, RockerBody body)
+@args (String id, io.oreto.burger.App.Application app, io.oreto.burger.Server server, RockerContent js, RockerContent css, RockerBody body)
 <html lang="en">
 <head>
     <title>Burgers</title>
@@ -17,5 +17,8 @@
         </div>
     </div>
 </body>
+@if (!server.getJs().isEmpty()) {
+    @raw(server.getJs())
+}
 @js
 </html>

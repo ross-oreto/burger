@@ -5,7 +5,8 @@
 , Integer year
 , java.util.List<io.oreto.burger.Taster> tasters
 , String path
-, io.oreto.burger.App.Application app)
+, io.oreto.burger.App.Application app
+, io.oreto.burger.Server server)
 
 @css => {
     <link rel="stylesheet" href="/asset/css/burgers">
@@ -22,7 +23,7 @@
     <script type="application/javascript" src="/asset/js/burgers"></script>
 }
 
-@views.main.template(id, app, js, css) -> {
+@views.main.template(id, app, server, js, css) -> {
 <div class="burger d-flex">
     @if (id == "landing") {
         <div class="card center flex-grow-1 flex-lg-grow-0">
