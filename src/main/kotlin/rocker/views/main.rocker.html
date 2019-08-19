@@ -1,4 +1,4 @@
-@args (String id, io.oreto.burger.App.Application app, io.oreto.burger.Server server, RockerContent js, RockerContent css, RockerBody body)
+@args (io.oreto.burger.Server server, RockerContent js, RockerContent css, RockerBody body)
 <html lang="en">
 <head>
     <title>Burgers</title>
@@ -7,9 +7,9 @@
 </head>
 <body>
     <div class="container-fluid">
-        <div class="burger-container @id">
+        <div class="burger-container @server.getParam("pageId")">
             @body
-<!--            @if (id == "landing") {-->
+<!--            @if (server.getParam("pageId") == "landing") {-->
 <!--            <div class="center text-center scroll-btn">-->
 <!--                <i class="fas fa-arrow-circle-down fa-3x"></i>-->
 <!--            </div>-->

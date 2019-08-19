@@ -5,21 +5,31 @@ import io.jooby.Kooby
 class BurgerModule : Kooby({
     val defaultPages = Burger.list.size + 1
 
-    get("/") {
-        val pages: Int = App.config.getInt("burger.pages").or(defaultPages)
-        val year = ctx.path("year").intValue()
-        views.burger.template(null, "landing", pages, pages, year, null, "/burgers", App.app, Server(ctx).withJs())
-    }
+    val yearParamName = "year"
+    val pageParamName = "page"
 
-    get("/{page}") {
-        val pages: Int = App.config.getInt("burger.pages").or(defaultPages)
+    path("/burgers/{$yearParamName}") {
+        get("/") {
+            views.burger.template(null, null
+                    , Server(ctx).pathParam(yearParamName, ctx.path(yearParamName).intValue())
+                    .pathParam(pageParamName, defaultPages)
+                    .param("pages", defaultPages)
+                    .param("pageId", "landing")
+                    .withJs())
+        }
 
-        val year = ctx.path("year").intValue()
-        val page: Int? = ctx.path("page").intValue()
-        val index: Int = page ?: defaultPages
-        val burger: Burger? = Burger.at(index)
-        val pageId: String = burger?.id ?: (if (index == 0) "credits" else "landing")
+        get("/{$pageParamName}") {
+            val page: Int = ctx.path(pageParamName).intValue()
 
-        views.burger.template(burger, pageId, index, pages, year, Taster.list, "/burgers", App.app, Server(ctx).withJs())
+            val burger: Burger? = Burger.at(page)
+            val pageId: String = burger?.id ?: (if (page == 0) "credits" else "landing")
+
+            views.burger.template(burger, Taster.list
+                    , Server(ctx).pathParam(yearParamName, ctx.path(yearParamName).intValue())
+                    .pathParam(pageParamName, page)
+                    .param("pages", defaultPages)
+                    .param("pageId", pageId)
+                    .withJs())
+        }
     }
 })

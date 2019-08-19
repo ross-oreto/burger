@@ -2,11 +2,8 @@ package io.oreto.burger
 
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigException
-import io.jooby.Environment
-import io.jooby.Kooby
-import io.jooby.ServerOptions
+import io.jooby.*
 import io.jooby.rocker.RockerModule
-import io.jooby.runApp
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
@@ -25,7 +22,8 @@ class App :Kooby({
 
     onStarting {
         log.info("starting app")
-        app = application(environment, serverOptions, contextPath)
+        serverJs = Server.baseJs(environment, routes, config)
+        app = application(environment, serverOptions, contextPath, routes)
         App.config = config
     }
 
@@ -41,24 +39,26 @@ class App :Kooby({
     assets(config.getString("assets.pattern"), config.getString("assets.path"))
 
     install(RockerModule())
-    mvc(AssetController())
-    use("/burgers/{year}", BurgerModule())
+    use(AssetModule())
+    use(BurgerModule())
 }) {
     companion object {
         val IS_WINDOWS = System.getProperty("os.name").toLowerCase().startsWith("windows")
+        lateinit var serverJs: File
         lateinit var app: Application
         lateinit var config: Config
 
         fun application(env: Environment
-                    , serverOptions: ServerOptions?
-                    , contextPath: String): Application {
+                        , serverOptions: ServerOptions?
+                        , contextPath: String
+                        , routes: List<Route>): Application {
             val scheme = "http"
             val port = serverOptions?.port ?: env.config.getInt("server.port")
 
             val host = "localhost"
             val baseUrl = "$scheme://$host:$port$contextPath"
 
-            return Application(env, scheme, host, port, contextPath, baseUrl)
+            return Application(env, scheme, host, port, contextPath, baseUrl, routes)
         }
 
         fun exists(path: String, config: Config = App.config): Boolean {
@@ -75,9 +75,10 @@ class App :Kooby({
                        , val host: String
                        , val port: Int
                        , val path: String
-                       , val baseUrl: String) {
+                       , val baseUrl: String
+                      , val routes: List<Route>) {
 
-        private val conf: Config = environment.config
+        val conf: Config = environment.config
 
         private val assetsConfig = conf.getConfig("assets")
         private val min = environment.isActive(ENV.uat.name) || environment.isActive(ENV.prod.name)
@@ -89,8 +90,23 @@ class App :Kooby({
                         Asset(it.key, assetsConfig, min) }
                 else listOf()
 
+        val namedRoutes: List<NamedRoute> = routes.map { NamedRoute(it) }
+
         fun getPackage(name: String): Asset? {
             return assets.findLast { it.packageName == name }
+        }
+
+        class NamedRoute(val route: Route) {
+            companion object {
+                fun routeToName(route: Route): String {
+                    return route.pattern.substring(1)
+                            .replace("{", "by-")
+                            .replace("}", "")
+                            .replace("/", "-")
+                }
+            }
+
+            val name: String = routeToName(route)
         }
 
         class Asset(val packageName: String, val conf: Config, val minify: Boolean = false) {
@@ -110,7 +126,7 @@ class App :Kooby({
                                     , minify)
                     , Types.js.name to Pack(packageName
                                     , Types.js.name
-                                    , packFiles(Types.js.name, packageName, conf)
+                                    , listOf(serverJs) + packFiles(Types.js.name, packageName, conf)
                                     , minify)
             )
 

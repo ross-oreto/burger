@@ -1,70 +1,146 @@
 package io.oreto.burger
 
+import com.typesafe.config.Config
 import io.jooby.Context
+import io.jooby.Environment
+import io.jooby.Route
+import java.io.File
+import java.nio.file.Paths
 
 open class Server(context: Context) {
 
-    val app: App.Application = App.app
-    val page: Page = Page(context.pathString(), context.route.pattern)
-    val routes: List<Route> = listOf()
-    val vars: Vars = Vars()
-    val assets: Assets? = null
-    var js: String = ""
+    companion object {
+        private const val serverJs = "server.js"
+        const val serverVarName = "server"
 
-    class Vars {
-        val str: MutableMap<String, String?> = mutableMapOf()
-        val num: MutableMap<String, Number?> = mutableMapOf()
-        val bool: MutableMap<String, Boolean?> = mutableMapOf()
+        fun baseJs(environment: Environment, routes: List<Route>, config: Config): File {
+            val file = File(Paths.get(config.getString("assets.path"), "js", serverJs).toString())
+            file.writeText("""if($serverVarName == null) server = { };
+$serverVarName.env = [${environment.activeNames.map { "'$it'" }.joinToString(", ") { it }}];
+$serverVarName.routes = ${routes.map { routeToString(it) }};
+$serverVarName.route = function(name) { return this.routes.find(function(r) { return r.name === name; }); };
+""".trimIndent())
+            return file
+        }
 
-        val strs: MutableMap<String, List<String?>> = mutableMapOf()
-        val nums: MutableMap<String, List<Number?>> = mutableMapOf()
-        val bools: MutableMap<String, List<Boolean?>> = mutableMapOf()
+        private fun routeToString(namedRoute: App.Application.NamedRoute): String {
+            return """{ name:'${namedRoute.name}'
+                , pattern:'${namedRoute.route.pattern}'
+               , method:'${namedRoute.route.method}'
+               , returnType:'${namedRoute.route.returnType}'
+               , pathKeys:${namedRoute.route.pathKeys.map{ "'$it'" } }
+               , produces:${namedRoute.route.produces.map{ "'$it'" } }
+               , consumes:${namedRoute.route.consumes.map{ "'$it'" } }
+               , pathParams: {}
+               , query: {}
+               , queryString: ${queryStringJsFun()}
+                , toString: ${urlToStringFun(namedRoute.route.pathKeys)}
+        }""".trimIndent()
+        }
 
-        override fun toString(): String {
-            return (str.map { "${it.key}: ${if (it.value == null) "null" else "'${it.value}'"}" } +
-                    num.map { "${it.key}: ${it.value ?: "null"}" } +
-                    bool.map { "${it.key}: ${it.value ?: "null"}" } +
-                    strs.map { "${it.key}: [${it.value.map { s: String? -> if (s == null) "null" else "'$s'" }}]" } +
-                    nums.map { "${it.key}: [${it.value.map { n: Number? -> n?.toString() ?: "null" }}]" } +
-                    bools.map { "${it.key}: [${it.value.map { b: Boolean? -> b?.toString() ?: "null" }}]" }
-                    ).joinToString { "\n,\t" }
+        private fun routeToString(route: Route): String {
+            return routeToString(App.Application.NamedRoute(route))
+        }
+
+        private fun queryStringJsFun(): String {
+            return """function(query) {
+            query = query == null ? this.query : query;
+            var params = [];
+            for(q in query) params.push(q+'='+query[q]);
+            return params.length > 0 ? '?' + params.join('&') : '';
+        }""".trimIndent()
+        }
+
+        private fun urlToStringFun(pathKeys: List<String>): String {
+            val starVarName = "x"
+            val args: String = (pathKeys + "query").joinToString(", ") { if(it == "*") starVarName else it }
+            return """function($args) {
+            var s = this.pattern; 
+            ${pathKeys.map {
+                val varName = if(it == "*") starVarName else it
+                "s = s.replace('{$it}', $varName == null ? this.pathParams['$it'] : $varName);"
+            }.joinToString("\n") { it } }
+            return s + this.queryString(query);
+        }""".trimIndent()
         }
     }
 
-    data class Page(val path: String
-                    , val pattern: String
-                    , val pathParams: Vars = Vars()
-                    , val query: Vars = Vars())
+    val app: App.Application = App.app
+    val url: Url = Url(context)
+    val params: MutableMap<String, Any?> = mutableMapOf()
+    val assets: Assets? = null
+    var js: String = ""
 
-    data class Route(val pattern: String
-                     , val method: String
-                     , val returnType: String
-                     , val pathKeys: List<String> = listOf()
-                     , val produces: List<String> = listOf()
-                     , val consumes: List<String> = listOf())
+    fun pathParam(name: String, value: Any?): Server {
+        url.pathParams[name] = value
+        return this
+    }
+
+    fun query(name: String, value: Any?): Server {
+        url.query[name] = value
+        return this
+    }
+
+    fun param(name: String, value: Any?): Server {
+        params[name] = value
+        return this
+    }
+
+    fun getPathParam(name: String): Any? {
+        return url.pathParams[name]
+    }
+
+    fun getQuery(name: String): Any? {
+        return url.query[name]
+    }
+
+    fun getParam(name: String): Any? {
+        return params[name]
+    }
+
+    data class Url(val context: Context) {
+        val path: String = context.pathString()
+        val pattern: String = context.route.pattern
+        val pathKeys: List<String> = context.route.pathKeys
+        val pathParams: MutableMap<String, Any?> = mutableMapOf()
+        val query: MutableMap<String, Any?> = mutableMapOf()
+    }
 
     data class Assets(val packageName: String
                       , val js: List<String> = listOf()
                       , val css: List<String> = listOf())
 
+    private fun paramsToString(params: MutableMap<String, Any?>): String {
+        return params.map {
+            "${it.key}: ${valToString(it.value)}"
+        }.joinToString(", ") { it }
+    }
+
+    private fun valToString(value: Any?): String {
+        return when (value) {
+            value == null -> "null"
+            is String -> "'$value'"
+            is List<*> -> {
+                "[${value.map { valToString(it) }.joinToString(", ") { it }}]"
+            } else -> value.toString()
+        }
+    }
+
     fun withJs(): Server {
-        val environments: String = app.environment.activeNames.map { "'$it'" }.joinToString { ", " }
-        js = """<script type="application/javascript">
-                    var server = {
-                        env: [$environments]
-                        
-                        , page: {
-                            path: '${page.path}'
-                            , pattern: '${page.pattern}'
-                            , params: { 
-                                ${page.pathParams} 
-                            }
-                            , query: { 
-                                ${page.query} 
-                            }
+        val serverVar = """{
+                        url: {
+                            path: '${url.path}'
+                            , pattern: '${url.pattern}'
+                            , pathKeys: ${url.pathKeys.map{ "'$it'" } }
+                            , pathParams: { ${paramsToString(url.pathParams)} }
+                            , query: { ${paramsToString(url.query)} }
+                            , queryString: ${queryStringJsFun()}
+                            , toString: ${urlToStringFun(url.pathKeys)}
                         }
-                    };
-                    </script>""".trimIndent()
+                        , params: { ${paramsToString(params)} }
+                    }
+        """.trimIndent().replace("\n", "").replace(Regex("\\s+"), " ")
+        js = """<script type="application/javascript">var $serverVarName=$serverVar;</script>"""
         return this
     }
 }

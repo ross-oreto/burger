@@ -1,9 +1,8 @@
 var infScroll = new InfiniteScroll( '.container-fluid', {
     path: function () {
-        if (window.index > 0) {
-            return window.path + '/' + window.year + '/'
-                 +
-                (window.index - 1);
+        if (server.url.pathParams.page > 0) {
+            return server.route('burgers-by-year-by-page')
+                .toString(server.url.pathParams.year, server.url.pathParams.page - 1);
         }
     },
     append: '.burger-container'
@@ -11,7 +10,7 @@ var infScroll = new InfiniteScroll( '.container-fluid', {
 });
 
 infScroll.on( 'request', function( path ) {
-    window.index--;
+    server.url.pathParams.page--;
 });
 
 $(document).ready(function(){

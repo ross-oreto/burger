@@ -6,3 +6,4 @@
 /tmp
 *.iml
 conf/application.secrets.conf
+/src/main/resources/public/js/server.js
