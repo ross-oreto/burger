@@ -65,7 +65,6 @@ $serverVarName.route = function(name) { return this.routes.find(function(r) { re
         }
     }
 
-    val app: App.Application = App.app
     val url: Url = Url(context)
     val params: MutableMap<String, Any?> = mutableMapOf()
     val assets: Assets? = null

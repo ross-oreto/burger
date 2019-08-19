@@ -24,7 +24,6 @@ class App :Kooby({
         log.info("starting app")
         serverJs = Server.baseJs(environment, routes, config)
         app = application(environment, serverOptions, contextPath, routes)
-        App.config = config
     }
 
     onStarted {
@@ -44,9 +43,10 @@ class App :Kooby({
 }) {
     companion object {
         val IS_WINDOWS = System.getProperty("os.name").toLowerCase().startsWith("windows")
+        val IS_BASH = !IS_WINDOWS
+
         lateinit var serverJs: File
         lateinit var app: Application
-        lateinit var config: Config
 
         fun application(env: Environment
                         , serverOptions: ServerOptions?
@@ -61,7 +61,7 @@ class App :Kooby({
             return Application(env, scheme, host, port, contextPath, baseUrl, routes)
         }
 
-        fun exists(path: String, config: Config = App.config): Boolean {
+        fun exists(path: String, config: Config): Boolean {
             return try {
                 config.hasPath(path)
             } catch (e: ConfigException.BadPath) {
