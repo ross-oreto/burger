@@ -66,7 +66,7 @@ $serverVarName.route = function(name) { return this.routes.find(function(r) { re
     }
 
     val url: Url = Url(context)
-    val params: MutableMap<String, Any?> = mutableMapOf()
+    val args: MutableMap<String, Any?> = mutableMapOf()
     val assets: Assets? = null
     var js: String = ""
 
@@ -80,8 +80,8 @@ $serverVarName.route = function(name) { return this.routes.find(function(r) { re
         return this
     }
 
-    fun param(name: String, value: Any?): Server {
-        params[name] = value
+    fun arg(name: String, value: Any?): Server {
+        args[name] = value
         return this
     }
 
@@ -93,8 +93,8 @@ $serverVarName.route = function(name) { return this.routes.find(function(r) { re
         return url.query[name]
     }
 
-    fun getParam(name: String): Any? {
-        return params[name]
+    fun getArg(name: String): Any? {
+        return args[name]
     }
 
     data class Url(val context: Context) {
@@ -136,7 +136,7 @@ $serverVarName.route = function(name) { return this.routes.find(function(r) { re
                             , queryString: ${queryStringJsFun()}
                             , toString: ${urlToStringFun(url.pathKeys)}
                         }
-                        , params: { ${paramsToString(params)} }
+                        , args: { ${paramsToString(args)} }
                     }
         """.trimIndent().replace("\n", "").replace(Regex("\\s+"), " ")
         js = """<script type="application/javascript">var $serverVarName=$serverVar;</script>"""

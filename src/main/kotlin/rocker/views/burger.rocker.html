@@ -12,7 +12,7 @@
 
 @views.main.template(server, js, css) -> {
 <div class="burger d-flex">
-    @if (server.getParam("pageId") == "landing") {
+    @if (server.getArg("pageId") == "landing") {
         <div class="card center flex-grow-1 flex-lg-grow-0">
             <div class="card-body">
                 <h1 class="card-title text-center">The definitive @server.getPathParam("year") Nashville, TN <br>burger countdown</h1>
@@ -39,7 +39,7 @@
                 </p>
             </div>
         </div>
-    } else if (server.getParam("pageId") == "credits") {
+    } else if (server.getArg("pageId") == "credits") {
         <div class="row center flex-grow-1">
             <div class="card col-12 flex-grow-1 border-secondary mb-3">
                 <div class="card-body text-center">
@@ -82,9 +82,9 @@
                 <p class="card-text">
                     @?burger.getNotes()
                 </p>
-                <img src="/assets/css/burgers/@server.getPathParam("year")/@(server.getParam("pageId"))-sm.jpg"
+                <img src="/assets/css/burgers/@server.getPathParam("year")/@(server.getArg("pageId"))-sm.jpg"
                      class="d-lg-none d-xl-none"
-                     alt="/assets/css/burgers/@server.getPathParam("year")/@(server.getParam("pageId"))-sm.jpg">
+                     alt="/assets/css/burgers/@server.getPathParam("year")/@(server.getArg("pageId"))-sm.jpg">
             </div>
         </div>
     }

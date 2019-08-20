@@ -4,13 +4,14 @@ import io.jooby.Kooby
 
 class BurgerModule : Kooby({
 
-    path("/${group.name}/{${group.year}}") {
+    path("/${group.name}/{${group.year.name}}") {
+
         get("/") {
             views.burger.template(null, null
                     , Server(ctx).pathParam(group.year.name, ctx.path(group.year.name).intValue())
                     .pathParam(group.page.name, group.page.defaultValue)
-                    .param("pages", group.page.defaultValue)
-                    .param("pageId", "landing")
+                    .arg(group.pages.name, group.pages.defaultValue)
+                    .arg(group.pageId.name, group.pageId.defaultValue)
                     .withJs())
         }
 
@@ -18,23 +19,18 @@ class BurgerModule : Kooby({
             val page: Int = ctx.path(group.page.name).intValue()
 
             val burger: Burger? = Burger.at(page)
-            val pageId: String = burger?.id ?: (if (page == 0) "credits" else "landing")
+            val pageId: String = burger?.id ?: (if (page == 0) group.pageId.final else group.pageId.defaultValue.toString())
 
             views.burger.template(burger, Taster.list
                     , Server(ctx).pathParam(group.year.name, ctx.path(group.year.name).intValue())
                     .pathParam(group.page.name, page)
-                    .param("pages", group.page.defaultValue)
-                    .param("pageId", pageId)
+                    .arg(group.pages.name, group.pages.defaultValue)
+                    .arg(group.pageId.name, pageId)
                     .withJs())
         }
     }
 }) {
     companion object {
-        interface Grouped { val name: String }
-        interface Named {
-            val name: String
-            val defaultValue: Any?
-        }
         val group = BurgerGroup("burgers")
 
         class BurgerGroup(override val name: String): Grouped {
@@ -44,8 +40,16 @@ class BurgerModule : Kooby({
             inner class Page(override val name: String = "page"
                              , override val defaultValue: Any? = Burger.list.size + 1): Named
 
-            val page = Page()
+            inner class Pages(override val name: String = "pages"
+                             , override val defaultValue: Any? = Burger.list.size + 1): Named
+
+            inner class PageId(override val name: String = "pageId", val final: String = "credits"
+                              , override val defaultValue: Any? = "landing"): Named
+
             val year = Year()
+            val page = Page()
+            val pages = Pages()
+            val pageId = PageId()
         }
     }
 }
