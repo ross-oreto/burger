@@ -1,0 +1,20 @@
+@args(java.util.List<io.oreto.burger.Burger> burgers
+, io.oreto.burger.Server server, java.util.List<io.oreto.burger.Taster> tasters)
+
+@css => {
+    <link rel="stylesheet" href="/asset/css/burgers">
+}
+
+@js => {
+    <script type="application/javascript" src="/asset/js/burgers"></script>
+}
+
+@views.main.template(server, js, css) -> {
+    @views.landing.template(server)
+    @for ((i, burger) : burgers) {
+        @views.burger.template(burger, (new Integer(server.getArg("pages").toString()) - (i.index()+1)))
+    }
+    @if (new Integer(server.getPathParam("rank").toString()) == 0) {
+        @views.credits.template(tasters)
+    }
+}

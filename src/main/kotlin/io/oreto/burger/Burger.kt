@@ -13,7 +13,8 @@ class Burger(val id: String
              , val temperatures: List<Double>
              , val presentations: List<Double>
              , val price: String
-             , val notes: String) {
+             , val notes: String
+             , val year: Int) {
 
     val taste: Double = tastes.sum() / tastes.size
     val quality: Double = qualities.sum() / qualities.size
@@ -27,7 +28,15 @@ class Burger(val id: String
 
         val list: List<Burger> = (mapper.readValue(
                 File(Paths.get("burgers.json").toString())
-        ) as List<Burger>).sortedByDescending { it.total }
+        ) as List<Burger>).sortedBy { it.total }
+
+        fun count(year: Int): Int {
+            return list.filter { it.year == year }.size
+        }
+
+        fun findAll(year: Int): List<Burger> {
+            return list.filter { it.year == year }.sortedBy { it.total }
+        }
 
         fun get(id: String): Burger? {
             return list.find {
@@ -35,8 +44,8 @@ class Burger(val id: String
             }
         }
 
-        fun at(index: Int): Burger? {
-            return list.getOrNull(index - 1)
+        fun at(year: Int, index: Int): Burger? {
+            return findAll(year).getOrNull(index - 1)
         }
     }
 }

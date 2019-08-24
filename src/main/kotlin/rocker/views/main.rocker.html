@@ -1,20 +1,16 @@
 @args (io.oreto.burger.Server server, RockerContent js, RockerContent css, RockerBody body)
 <html lang="en">
 <head>
+    <link rel="icon"
+          type="image/png"
+          href="/assets/favicon.png">
     <title>Burgers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     @css
 </head>
 <body>
     <div class="container-fluid">
-        <div class="burger-container @server.getArg("pageId")">
-            @body
-<!--            @if (server.getArg("pageId") == "landing") {-->
-<!--            <div class="center text-center scroll-btn">-->
-<!--                <i class="fas fa-arrow-circle-down fa-3x"></i>-->
-<!--            </div>-->
-<!--            }-->
-        </div>
+        @body
     </div>
 </body>
 @if (!server.getJs().isEmpty()) {

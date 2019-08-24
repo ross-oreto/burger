@@ -1,32 +1,43 @@
 package io.oreto.burger
 
 import io.jooby.Kooby
+import io.oreto.burger.Module.ajax
 
 class BurgerModule : Kooby({
 
     path("/${group.name}/{${group.year.name}}") {
 
         get("/") {
-            views.burger.template(null, null
-                    , Server(ctx).pathParam(group.year.name, ctx.path(group.year.name).intValue())
-                    .pathParam(group.page.name, group.page.defaultValue)
-                    .arg(group.pages.name, group.pages.defaultValue)
-                    .arg(group.pageId.name, group.pageId.defaultValue)
-                    .withJs())
+            val year: Int = ctx.path(group.year.name).intValue()
+            val pages: Int = Burger.count(year) + 1
+            views.burgers.template(listOf()
+                    , Server(ctx).pathParam(group.year.name, year)
+                    .pathParam(group.rank.name, Burger.count(year) + 1)
+                    .arg(group.pages.name, pages)
+                    .withJs(), Taster.list)
         }
 
-        get("/{${group.page.name}}") {
-            val page: Int = ctx.path(group.page.name).intValue()
+        get("/{${group.rank.name}}") {
+            val ajax: Boolean = ajax(ctx)
+            val year: Int = ctx.path(group.year.name).intValue()
+            val rank: Int = ctx.path(group.rank.name).intValue()
+            val burgerCount: Int = Burger.count(year)
+            val pages: Int = burgerCount + 1
+            val page: Int = pages - rank
 
-            val burger: Burger? = Burger.at(page)
-            val pageId: String = burger?.id ?: (if (page == 0) group.pageId.final else group.pageId.defaultValue.toString())
-
-            views.burger.template(burger, Taster.list
-                    , Server(ctx).pathParam(group.year.name, ctx.path(group.year.name).intValue())
-                    .pathParam(group.page.name, page)
-                    .arg(group.pages.name, group.pages.defaultValue)
-                    .arg(group.pageId.name, pageId)
-                    .withJs())
+            if (ajax) {
+                if (rank > 0) {
+                    views.burger.template(Burger.at(year, page), rank)
+                } else {
+                    views.credits.template(Taster.list)
+                }
+            }
+            else views.burgers.template(
+                    Burger.findAll(year).subList(0, if (page > burgerCount) burgerCount else page)
+                    , Server(ctx)
+                    .pathParam(group.year.name, year)
+                    .pathParam(group.rank.name, rank)
+                    .arg(group.pages.name, pages).withJs(), Taster.list)
         }
     }
 }) {
@@ -35,21 +46,17 @@ class BurgerModule : Kooby({
 
         class BurgerGroup(override val name: String): Grouped {
             inner class Year(override val name: String = "year"
-                             , override val defaultValue: Any? = 2019): Named
+                             , override val defaultValue: Int = 2019): Named
 
-            inner class Page(override val name: String = "page"
-                             , override val defaultValue: Any? = Burger.list.size + 1): Named
+            inner class Rank(override val name: String = "rank"
+                             , override val defaultValue: Int = Burger.list.size): Named
 
             inner class Pages(override val name: String = "pages"
-                             , override val defaultValue: Any? = Burger.list.size + 1): Named
-
-            inner class PageId(override val name: String = "pageId", val final: String = "credits"
-                              , override val defaultValue: Any? = "landing"): Named
+                             , override val defaultValue: Int = Burger.list.size): Named
 
             val year = Year()
-            val page = Page()
+            val rank = Rank()
             val pages = Pages()
-            val pageId = PageId()
         }
     }
 }

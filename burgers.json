@@ -8,7 +8,8 @@
     "temperatures": [1.5, 1.0],
     "presentations": [1.0, 2.0],
     "price": "$",
-    "notes": "Cheap and amazing value. Best bang for buck burger in Nashville. Doesn't sacrifice on taste or quality and offers variety on the classic style choices."
+    "notes": "Cheap and amazing value. Best bang for buck burger in Nashville. Doesn't sacrifice on taste or quality and offers variety on the classic style choices.",
+    "year": 2019
   },
   {
     "id": "melrose",
@@ -19,7 +20,8 @@
     "temperatures": [1.0, 1.0],
     "presentations": [1.0, 2.0],
     "price": "$$",
-    "notes": "A solid choice and looks great alongside waffle fries. The only downside is the meat which is overcooked for a gourmet style and loses a lot of flavor."
+    "notes": "A solid choice and looks great alongside waffle fries. The only downside is the meat which is overcooked for a gourmet style and loses a lot of flavor.",
+    "year": 2019
   },
   {
     "id": "mill",
@@ -30,7 +32,8 @@
     "temperatures": [2.0, 1.5],
     "presentations": [1.0, 2.0],
     "price": "$$",
-    "notes": "This isn't just a brewery, it's a hidden burger gem! This little classic with class burger kills it and pairs well with their excellent brews."
+    "notes": "This isn't just a brewery, it's a hidden burger gem! This little classic with class burger kills it and pairs well with their excellent brews.",
+    "year": 2019
   },
   {
     "id": "jack",
@@ -41,7 +44,8 @@
     "temperatures": [1.5, 1.0],
     "presentations": [1.0, 2.5],
     "price": "$$",
-    "notes": "King of the classic diner style burgers. This place combines not only the best diner style burgers in town but also adds the most original twists on classics. They are cooked right in front of you on the flattop and come in hot!"
+    "notes": "King of the classic diner style burgers. This place combines not only the best diner style burgers in town but also adds the most original twists on classics. They are cooked right in front of you on the flattop and come in hot!",
+    "year": 2019
   },
   {
     "id": "republic",
@@ -52,7 +56,8 @@
     "temperatures": [2.0, 2.0],
     "presentations": [1.0, 1.0],
     "price": "$$",
-    "notes": "Food porn at its finest. The Triple decker burger is large and super tasty. It's a little messy so handle with care."
+    "notes": "Food porn at its finest. The Triple decker burger is large and super tasty. It's a little messy so handle with care.",
+    "year": 2019
   },
   {
     "id": "union",
@@ -63,7 +68,8 @@
     "temperatures": [3.0, 2.5],
     "presentations": [1.0, 1.5],
     "price": "$$$",
-    "notes": "A quality cheese burger cooked by a quality steakhouse. The meat is cooked nicely with great flavor and is not overpowered by the grilled onions or melty goodness of the cheese."
+    "notes": "A quality cheese burger cooked by a quality steakhouse. The meat is cooked nicely with great flavor and is not overpowered by the grilled onions or melty goodness of the cheese.",
+    "year": 2019
   },
   {
     "id": "t-row",
@@ -74,7 +80,8 @@
     "temperatures": [2, 3.0],
     "presentations": [1.0, 2.0],
     "price": "$$",
-    "notes": "A solid and southern cheeseburger. The meat is quality, cooked perfectly, paired with house made pimento cheese and a fried green tomato."
+    "notes": "A solid and southern cheeseburger. The meat is quality, cooked perfectly, paired with house made pimento cheese and a fried green tomato.",
+    "year": 2019
   },
   {
     "id": "husk",
@@ -85,7 +92,8 @@
     "temperatures": [3.0, 2.0],
     "presentations": [1.0, 1.0],
     "price": "$$$",
-    "notes": "Superb cheeseburger as you can only expect from a Husk chef. It's a classic style executed masterfully. The fries were lacking as was any originality, but it won't slow down your appetite. Side note: only available for lunch."
+    "notes": "Superb cheeseburger as you can only expect from a Husk chef. It's a classic style executed masterfully. The fries were lacking as was any originality, but it won't slow down your appetite. Side note: only available for lunch.",
+    "year": 2019
   },
   {
     "id": "brew",
@@ -96,7 +104,8 @@
     "temperatures": [2.5, 3.0],
     "presentations": [1.5, 2.5],
     "price": "$$$",
-    "notes": "The 2nd hidden brewery burger. This burger is loaded with rich and savory flavors. At first is almost seems too potent but it finishes really well. The meat is super juicy and tender and the bread holds up surprisingly well. Even the fries are loaded with seasoned flavor."
+    "notes": "The 2nd hidden brewery burger. This burger is loaded with rich and savory flavors. At first is almost seems too potent but it finishes really well. The meat is super juicy and tender and the bread holds up surprisingly well. Even the fries are loaded with seasoned flavor.",
+    "year": 2019
   },
   {
     "id": "emmy",
@@ -107,7 +116,8 @@
     "temperatures": [2.5, 2.5],
     "presentations": [1.5, 2.0],
     "price": "$$$",
-    "notes": "We don't understand how this burger is so good. The sandwich is a double decker and the meat is still somehow cooked nicely and kept thin. The sauce, pretzel bun, and cheese really sets this guy off. Matt can get a little messy but completely worth it."
+    "notes": "We don't understand how this burger is so good. The sandwich is a double decker and the meat is still somehow cooked nicely and kept thin. The sauce, pretzel bun, and cheese really sets this guy off. Matt can get a little messy but completely worth it.",
+    "year": 2019
   },
   {
     "id": "frisco",
@@ -118,7 +128,8 @@
     "temperatures": [3.0],
     "presentations": [2.5],
     "price": "$$$",
-    "notes": "Amazingly cooked double stacked high quality beef with great flavor. The rest of the sandwich wasn't on the same level as the meat or this would have scored higher. Regardless this is a great burger to try."
+    "notes": "Amazingly cooked double stacked high quality beef with great flavor. The rest of the sandwich wasn't on the same level as the meat or this would have scored higher. Regardless this is a great burger to try.",
+    "year": 2019
   },
   {
     "id": "pinewood",
@@ -129,7 +140,8 @@
     "temperatures": [1.5, 1.5],
     "presentations": [2.0, 2.0],
     "price": "$$",
-    "notes": "We were just trying to kill time while having a drink and waiting for dinner at another restaurant but we found another great classic cheeseburger; And it's done right with high quality ingredients and an excellent taste profile."
+    "notes": "We were just trying to kill time while having a drink and waiting for dinner at another restaurant but we found another great classic cheeseburger; And it's done right with high quality ingredients and an excellent taste profile.",
+    "year": 2019
   },
   {
     "id": "chagos",
@@ -140,7 +152,8 @@
     "temperatures": [2.0, 2.0],
     "presentations": [1.5, 2.5],
     "price": "$$",
-    "notes": "This great little Mexican kitchen really knows the gringos because they added an awesome cheeseburger to the menu. Not only did they add one but it quickly became one of Nashville's favorites! The saucy burger has surprisingly good flavor for the patty size."
+    "notes": "This great little Mexican kitchen really knows the gringos because they added an awesome cheeseburger to the menu. Not only did they add one but it quickly became one of Nashville's favorites! The saucy burger has surprisingly good flavor for the patty size.",
+    "year": 2019
   },
   {
     "id": "shack",
@@ -151,6 +164,7 @@
     "temperatures": [2.0, 1.0],
     "presentations": [1.0, 1.5],
     "price": "$",
-    "notes": "Great little cheeseburger for the price. Very tasty and you'll still be able to move around afterwards."
+    "notes": "Great little cheeseburger for the price. Very tasty and you'll still be able to move around afterwards.",
+    "year": 2019
   }
 ]
