@@ -11,19 +11,19 @@ open class Server(context: Context) {
 
     companion object {
         private const val serverJs = "server.js"
-        const val serverVarName = "server"
+        const val name = "server"
 
         fun baseJs(environment: Environment, routes: List<Route>, config: Config): File {
             val file = File(Paths.get(config.getString("assets.path"), "js", serverJs).toString())
-            file.writeText("""if($serverVarName == null) server = { };
-$serverVarName.env = [${environment.activeNames.map { "'$it'" }.joinToString(", ") { it }}];
-$serverVarName.routes = ${routes.map { routeToString(it) }};
-$serverVarName.route = function(name) { return this.routes.find(function(r) { return r.name === name; }); };
+            file.writeText("""if(typeof $name === 'undefined') $name = { };
+$name.env = [${environment.activeNames.map { "'$it'" }.joinToString(", ") { it }}];
+$name.routes = ${routes.map { routeToJs(it) }};
+$name.route = function(name) { return this.routes.find(function(r) { return r.name === name; }); };
 """.trimIndent())
             return file
         }
 
-        private fun routeToString(namedRoute: App.Application.NamedRoute): String {
+        private fun routeToJs(namedRoute: App.Application.NamedRoute): String {
             return """{ name:'${namedRoute.name}'
                 , pattern:'${namedRoute.route.pattern}'
                , method:'${namedRoute.route.method}'
@@ -34,12 +34,12 @@ $serverVarName.route = function(name) { return this.routes.find(function(r) { re
                , pathParams: {}
                , query: {}
                , queryString: ${queryStringJsFun()}
-                , toString: ${urlToStringFun(namedRoute.route.pathKeys)}
+                , toString: ${urlToJsFun(namedRoute.route.pathKeys)}
         }""".trimIndent()
         }
 
-        private fun routeToString(route: Route): String {
-            return routeToString(App.Application.NamedRoute(route))
+        private fun routeToJs(route: Route): String {
+            return routeToJs(App.Application.NamedRoute(route))
         }
 
         private fun queryStringJsFun(): String {
@@ -51,7 +51,7 @@ $serverVarName.route = function(name) { return this.routes.find(function(r) { re
         }""".trimIndent()
         }
 
-        private fun urlToStringFun(pathKeys: List<String>): String {
+        private fun urlToJsFun(pathKeys: List<String>): String {
             val starVarName = "x"
             val args: String = (pathKeys + "query").joinToString(", ") { if(it == "*") starVarName else it }
             return """function($args) {
@@ -66,21 +66,21 @@ $serverVarName.route = function(name) { return this.routes.find(function(r) { re
     }
 
     val url: Url = Url(context)
-    val args: MutableMap<String, Any?> = mutableMapOf()
+    val args: MutableMap<String, String?> = mutableMapOf()
     val assets: Assets? = null
     var js: String = ""
 
-    fun pathParam(name: String, value: Any?): Server {
+    fun pathParam(name: String, value: String?): Server {
         url.pathParams[name] = value
         return this
     }
 
-    fun query(name: String, value: Any?): Server {
+    fun query(name: String, value: String?): Server {
         url.query[name] = value
         return this
     }
 
-    fun arg(name: String, value: Any?): Server {
+    fun arg(name: String, value: String?): Server {
         args[name] = value
         return this
     }
@@ -101,27 +101,28 @@ $serverVarName.route = function(name) { return this.routes.find(function(r) { re
         val path: String = context.pathString()
         val pattern: String = context.route.pattern
         val pathKeys: List<String> = context.route.pathKeys
-        val pathParams: MutableMap<String, Any?> = mutableMapOf()
-        val query: MutableMap<String, Any?> = mutableMapOf()
+        val pathParams: MutableMap<String, String?> = context.pathMap()
+        val query: MutableMap<String, String?> = context.queryMap()
     }
 
     data class Assets(val packageName: String
                       , val js: List<String> = listOf()
                       , val css: List<String> = listOf())
 
-    private fun paramsToString(params: MutableMap<String, Any?>): String {
+    private fun paramsToString(params: MutableMap<String, String?>): String {
         return params.map {
-            "${it.key}: ${valToString(it.value)}"
+            entryToString(it.key, it.value)
         }.joinToString(", ") { it }
     }
 
-    private fun valToString(value: Any?): String {
-        return when (value) {
-            value == null -> "null"
-            is String -> "'$value'"
-            is List<*> -> {
-                "[${value.map { valToString(it) }.joinToString(", ") { it }}]"
-            } else -> value.toString()
+    private fun entryToString(key: String, value: String?): String {
+        return if (value == null) {
+            "null"
+        } else {
+            val typeKey = key.split("_")
+            val type = if (typeKey.size > 1) typeKey[0] else null
+            if (type == null) "$key: '$value'"
+            else "$key: $value"
         }
     }
 
@@ -134,12 +135,15 @@ $serverVarName.route = function(name) { return this.routes.find(function(r) { re
                             , pathParams: { ${paramsToString(url.pathParams)} }
                             , query: { ${paramsToString(url.query)} }
                             , queryString: ${queryStringJsFun()}
-                            , toString: ${urlToStringFun(url.pathKeys)}
+                            , toString: ${urlToJsFun(url.pathKeys)}
                         }
                         , args: { ${paramsToString(args)} }
+                        , getArg: function(name) { return args[name]; } 
+                        , getQuery: function(name) { return url.query[name]; } 
+                        , getPathParam: function(name) { return url.pathParams[name]; } 
                     }
         """.trimIndent().replace("\n", "").replace(Regex("\\s+"), " ")
-        js = """<script type="application/javascript">var $serverVarName=$serverVar;</script>"""
+        js = """<script type="application/javascript">var $name=$serverVar;</script>"""
         return this
     }
 }

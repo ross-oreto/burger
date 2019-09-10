@@ -1,62 +1,85 @@
 package io.oreto.burger
 
 import io.jooby.Kooby
-import io.oreto.burger.Module.ajax
+import io.jooby.ModelAndView
+import io.oreto.burger.Module.Companion.ajax
 
 class BurgerModule : Kooby({
 
-    path("/${group.name}/{${group.year.name}}") {
-
+    path("/${burgersGroup.name}/{${burgersGroup.year}}") {
         get("/") {
-            val year: Int = ctx.path(group.year.name).intValue()
+            val year: Int = ctx.path(burgersGroup.year).intValue()
             val pages: Int = Burger.count(year) + 1
-            views.burgers.template(listOf()
-                    , Server(ctx).pathParam(group.year.name, year)
-                    .pathParam(group.rank.name, Burger.count(year) + 1)
-                    .arg(group.pages.name, pages)
-                    .withJs(), Taster.list)
+
+            burgersGroup.burgersViewModel.model = BurgersGroup.BurgersViewModel.Model(
+                    listOf()
+                    , Taster.list
+                    , Server(ctx)
+                        .pathParam(burgersGroup.year, year.toString())
+                        .pathParam(burgersGroup.burgersViewModel.rank, (Burger.count(year) + 1).toString())
+                        .arg(burgersGroup.burgersViewModel.pages, pages.toString())
+                    .withJs())
+
+            ModelAndView(burgersGroup.burgersViewModel.view)
+                    .put(modelName, burgersGroup.burgersViewModel)
         }
 
-        get("/{${group.rank.name}}") {
+        get("/{${burgersGroup.burgersViewModel.rank}}") {
             val ajax: Boolean = ajax(ctx)
-            val year: Int = ctx.path(group.year.name).intValue()
-            val rank: Int = ctx.path(group.rank.name).intValue()
+            val year: Int = ctx.path(burgersGroup.year).intValue()
+            val rank: Int = ctx.path(burgersGroup.burgersViewModel.rank).intValue()
             val burgerCount: Int = Burger.count(year)
             val pages: Int = burgerCount + 1
             val page: Int = pages - rank
 
             if (ajax) {
                 if (rank > 0) {
-                    views.burger.template(Burger.at(year, page), rank)
+                    burgersGroup.burgerViewModel.model = BurgersGroup.BurgerViewModel.Model(Burger.at(year, page), rank)
+                    ModelAndView(burgersGroup.burgerViewModel.view)
+                            .put(modelName, burgersGroup.burgerViewModel)
                 } else {
-                    views.credits.template(Taster.list)
+                    burgersGroup.creditsViewModel.model = BurgersGroup.CreditsViewModel.Model(Taster.list)
+                    ModelAndView(burgersGroup.creditsViewModel.view)
+                            .put(modelName, burgersGroup.creditsViewModel)
                 }
+            } else {
+                burgersGroup.burgersViewModel.model = BurgersGroup.BurgersViewModel.Model(
+                        Burger.findAll(year).subList(0, if (page > burgerCount) burgerCount else page)
+                        , Taster.list
+                        , Server(ctx)
+                            .pathParam(burgersGroup.year, year.toString())
+                            .pathParam(burgersGroup.burgersViewModel.rank, rank.toString())
+                            .arg(burgersGroup.burgersViewModel.pages, pages.toString()).withJs())
+                ModelAndView(burgersGroup.burgersViewModel.view)
+                        .put(modelName, burgersGroup.burgersViewModel)
             }
-            else views.burgers.template(
-                    Burger.findAll(year).subList(0, if (page > burgerCount) burgerCount else page)
-                    , Server(ctx)
-                    .pathParam(group.year.name, year)
-                    .pathParam(group.rank.name, rank)
-                    .arg(group.pages.name, pages).withJs(), Taster.list)
         }
     }
 }) {
     companion object {
-        val group = BurgerGroup("burgers")
+        const val modelName = "viewModel"
+        const val templateExt = "peb"
+        val burgersGroup: BurgersGroup = BurgersGroup()
 
-        class BurgerGroup(override val name: String): Grouped {
-            inner class Year(override val name: String = "year"
-                             , override val defaultValue: Int = 2019): Named
+        class BurgersGroup(val name: String = "burgers", val year: String = "num_year") {
+            class BurgersViewModel(var model: Model? = null
+                                   , val view: String = "burgers.$templateExt"
+                                   , val rank: String = "num_rank"
+                                   , val pages: String = "num_pages") {
+                data class Model(val burgers: List<Burger>, val tasters: List<Taster>, val server: Server)
+            }
+            class BurgerViewModel(var model: Model? = null
+                                  , val view: String = "burger.$templateExt") {
+                data class Model(val burger: Burger?, val rank: Int)
+            }
+            class CreditsViewModel(var model: Model? = null
+                                   , val view: String = "credits.$templateExt") {
+                data class Model(val tasters: List<Taster>)
+            }
 
-            inner class Rank(override val name: String = "rank"
-                             , override val defaultValue: Int = Burger.list.size): Named
-
-            inner class Pages(override val name: String = "pages"
-                             , override val defaultValue: Int = Burger.list.size): Named
-
-            val year = Year()
-            val rank = Rank()
-            val pages = Pages()
+            val burgerViewModel = BurgerViewModel()
+            val burgersViewModel = BurgersViewModel()
+            val creditsViewModel = CreditsViewModel()
         }
     }
 }

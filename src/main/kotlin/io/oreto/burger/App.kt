@@ -3,7 +3,7 @@ package io.oreto.burger
 import com.typesafe.config.Config
 import com.typesafe.config.ConfigException
 import io.jooby.*
-import io.jooby.rocker.RockerModule
+import io.jooby.pebble.PebbleModule
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import java.io.BufferedReader
@@ -37,7 +37,11 @@ class App :Kooby({
 
     assets(config.getString("assets.pattern"), config.getString("assets.path"))
 
-    install(RockerModule())
+    before {
+        attribute(Server.name, Server(ctx))
+    }
+
+    install(PebbleModule())
     use(AssetModule())
     use(BurgerModule())
 }) {
@@ -89,8 +93,6 @@ class App :Kooby({
                     .map {
                         Asset(it.key, assetsConfig, min) }
                 else listOf()
-
-        val namedRoutes: List<NamedRoute> = routes.map { NamedRoute(it) }
 
         fun getPackage(name: String): Asset? {
             return assets.findLast { it.packageName == name }

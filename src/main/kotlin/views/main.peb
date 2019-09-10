@@ -1,4 +1,4 @@
-@args (io.oreto.burger.Server server, RockerContent js, RockerContent css, RockerBody body)
+{# @pebvariable name="server" type="io.oreto.burger.Server" #}
 <html lang="en">
 <head>
     <link rel="icon"
@@ -6,15 +6,16 @@
           href="/assets/favicon.png">
     <title>Burgers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    @css
+{% block css %}{% endblock %}
 </head>
 <body>
     <div class="container-fluid">
-        @body
+{% block body %}{% endblock %}
     </div>
 </body>
-@if (!server.getJs().isEmpty()) {
-    @raw(server.getJs())
-}
-@js
+{% if server.js is not empty %}
+{{ server.js | raw }}
+{% endif %}
+
+{% block js %}{% endblock %}
 </html>
