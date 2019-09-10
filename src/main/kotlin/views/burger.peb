@@ -1,30 +1,30 @@
-@args(io.oreto.burger.Burger burger, int rank)
-
-<div class="burger-container @?burger.getId()">
+{# @pebvariable name="burger" type="io.oreto.burger.Burger" #}
+{# @pebvariable name="rank" type="Int" #}
+<div class="burger-container {{ burger.id }}">
     <div class="burger d-flex">
         <div class="card center flex-grow-1 flex-lg-grow-0">
             <div class="card-body">
                 <h1 class="card-title text-center">
                     <strong class="rank-tag">
-                        #@rank
+                        #{{ rank }}
                     </strong>
-                    @?burger.getRestaurant()
+                    {{ burger.restaurant }}
                 </h1>
-                <h2 class="card-title text-center"><u>@?burger.getPlate()</u></h2>
-                <h2><u>Score: @?burger.getTotal()</u></h2>
+                <h2 class="card-title text-center"><u>{{ burger.plate }}</u></h2>
+                <h2><u>Score: {{ burger.total }}</u></h2>
                 <ul class="card-title">
-                    <li>Taste: @?burger.getTaste()</li>
-                    <li>Quality: @?burger.getQuality()</li>
-                    <li>Temperature: @?burger.getTemperature()</li>
-                    <li>Presentation: @?burger.getPresentation()</li>
-                    <li>Price: @?burger.getPrice()</li>
+                    <li>Taste: {{ burger.taste }}</li>
+                    <li>Quality: {{ burger.quality }}</li>
+                    <li>Temperature: {{ burger.temperature }}</li>
+                    <li>Presentation: {{ burger.presentation }}</li>
+                    <li>Price: {{ burger.price }}</li>
                 </ul>
                 <p class="card-text">
-                    @?burger.getNotes()
+                    {{ burger.notes }}
                 </p>
-                <img src="/assets/css/burgers/@burger.getYear()/@(burger.getId())-sm.jpg"
+                <img src="/assets/css/burgers/{{ burger.year }}/{{ burger.id }}-sm.jpg"
                      class="d-lg-none d-xl-none"
-                     alt="/assets/css/burgers/@burger.getYear()/@(burger.getId())-sm.jpg">
+                     alt="/assets/css/burgers/{{ burger.year }}/{{ burger.id }}-sm.jpg">
             </div>
             <div class="center text-center scroll-btn rounded-circle">
                 <img src="/assets/image/arrow-circle-down.svg" width="75" height="75"
