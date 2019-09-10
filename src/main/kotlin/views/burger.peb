@@ -1,12 +1,12 @@
 {# @pebvariable name="burger" type="io.oreto.burger.Burger" #}
-{# @pebvariable name="rank" type="Int" #}
+{# @pebvariable name="num_rank" type="Int" #}
 <div class="burger-container {{ burger.id }}">
     <div class="burger d-flex">
         <div class="card center flex-grow-1 flex-lg-grow-0">
             <div class="card-body">
                 <h1 class="card-title text-center">
                     <strong class="rank-tag">
-                        #{{ rank }}
+                        #{{ num_rank }}
                     </strong>
                     {{ burger.restaurant }}
                 </h1>

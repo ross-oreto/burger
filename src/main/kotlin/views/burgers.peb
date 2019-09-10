@@ -1,20 +1,18 @@
-@args(java.util.List<io.oreto.burger.Burger> burgers
-, io.oreto.burger.Server server, java.util.List<io.oreto.burger.Taster> tasters)
+{% extends "main.peb" %}
+{# @pebvariable name="viewModel" type="io.oreto.burger.BurgerModule.Companion.BurgersViewModel" #}
+{% set server = viewModel.model.server %}
 
-@css => {
-    <link rel="stylesheet" href="/asset/css/burgers">
-}
+{% block css %}<link rel="stylesheet" href="/asset/css/{{ viewModel.group }}">{% endblock %}
+{% block js %}<script type="application/javascript" src="/asset/js/{{ viewModel.group }}"></script>{% endblock %}
 
-@js => {
-    <script type="application/javascript" src="/asset/js/burgers"></script>
-}
+{% block body %}
+    {% include 'landing.peb' %}
 
-@views.main.template(server, js, css) -> {
-    @views.landing.template(server)
-    @for ((i, burger) : burgers) {
-        @views.burger.template(burger, (new Integer(server.getArg("pages").toString()) - (i.index()+1)))
-    }
-    @if (new Integer(server.getPathParam("rank").toString()) == 0) {
-        @views.credits.template(tasters)
-    }
-}
+    {% for burger in viewModel.model.burgers %}
+        {% include 'burger.peb' with {"num_rank": server.getArg(viewModel.pages) - loop.index} %}
+    {% endfor %}
+
+    {% if server.getPathParam(viewModel.rank) == "0" %}
+        {% include 'credits.peb' with {"tasters": viewModel.model.tasters} %}
+    {% endif %}
+{% endblock %}
