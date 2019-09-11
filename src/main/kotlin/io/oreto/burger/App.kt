@@ -41,7 +41,9 @@ class App :Kooby({
         attribute(Server.name, Server(ctx))
     }
 
-    install(PebbleModule())
+    install(PebbleModule(PebbleModule.create()
+            .setTemplatesPath(Paths.get("src", "main", "kotlin", "views").toString())
+            .build(environment)))
     use(AssetModule())
     use(BurgerModule())
 }) {

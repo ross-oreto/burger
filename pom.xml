@@ -141,7 +141,7 @@
                 <artifactId>jooby-maven-plugin</artifactId>
                 <version>${jooby.version}</version>
                 <configuration>
-                    <compileExtensions>java,kt,peb,js,css</compileExtensions>
+                    <compileExtensions>java,kt,peb,html,js,css</compileExtensions>
                     <restartExtensions>conf,properties,class</restartExtensions>
                 </configuration>
             </plugin>
