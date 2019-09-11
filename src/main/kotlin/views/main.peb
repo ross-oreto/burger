@@ -1,4 +1,4 @@
-{# @pebvariable name="server" type="io.oreto.burger.Server" #}
+{# @pebvariable name="serverjs" type="String" #}
 <html lang="en">
 <head>
     <link rel="icon"
@@ -13,8 +13,8 @@
 {% block body %}{% endblock %}
     </div>
 </body>
-{% if server.js is not empty %}
-{{ server.js | raw }}
+{% if serverjs is not empty %}
+{{ serverjs | raw }}
 {% endif %}
 
 {% block js %}{% endblock %}

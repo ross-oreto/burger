@@ -42,7 +42,7 @@
     "tastes": [9.0, 8.0],
     "qualities": [3.5, 2.0],
     "temperatures": [1.5, 1.0],
-    "presentations": [1.0, 2.5],
+    "presentations": [1.0, 2.0],
     "price": "$$",
     "notes": "King of the classic diner style burgers. This place combines not only the best diner style burgers in town but also adds the most original twists on classics. They are cooked right in front of you on the flattop and come in hot!",
     "year": 2019
@@ -102,7 +102,7 @@
     "tastes": [9.5, 9.5],
     "qualities": [4.5, 4.0],
     "temperatures": [2.5, 3.0],
-    "presentations": [1.5, 2.5],
+    "presentations": [1.5, 2.0],
     "price": "$$$",
     "notes": "The 2nd hidden brewery burger. This burger is loaded with rich and savory flavors. At first is almost seems too potent but it finishes really well. The meat is super juicy and tender and the bread holds up surprisingly well. Even the fries are loaded with seasoned flavor.",
     "year": 2019
@@ -126,7 +126,7 @@
     "tastes": [8.5, 8.0],
     "qualities": [3.5, 3.0],
     "temperatures": [2.5, 3.0],
-    "presentations": [1.5, 2.5],
+    "presentations": [1.5, 2.0],
     "price": "$$$",
     "notes": "Amazingly cooked double stacked high quality beef with great flavor. The rest of the sandwich wasn't on the same level as the meat or this would have scored higher. Regardless this is a great burger to try.",
     "year": 2019
@@ -150,7 +150,7 @@
     "tastes": [8.0, 7.5],
     "qualities": [3.5, 3.5],
     "temperatures": [2.0, 2.0],
-    "presentations": [1.5, 2.5],
+    "presentations": [1.5, 2.0],
     "price": "$$",
     "notes": "This great little Mexican kitchen really knows the gringos because they added an awesome cheeseburger to the menu. Not only did they add one but it quickly became one of Nashville's favorites! The saucy burger has surprisingly good flavor for the patty size.",
     "year": 2019

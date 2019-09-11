@@ -1,0 +1,32 @@
+{% macro credits(tasters) %}
+<div class="burger-container credits">
+    <div class="burger d-flex">
+        <div class="row center flex-grow-1">
+            <div class="card col-12 flex-grow-1 border-secondary mb-3">
+                <div class="card-body text-center">
+                    <h1 class="card-title text-center">The Tasters</h1>
+                    <p class="card-text">A little about the authors and taste judges</p>
+                </div>
+            </div>
+            <div class="card-deck center w-100">
+                {% for taster in tasters %}
+                <div class="card flex-grow-1">
+                    <div class="card-header">
+                        <h1>
+                            {{ taster.name }}
+                            <img src="/assets/image/{{ taster.shortName }}-sm.jpg"
+                                 alt=""
+                                 class="float-center">
+                        </h1>
+                    </div>
+                    <div class="card-body">
+                        <h1 class="card-title">{{ taster.nationality }}</h1>
+                        <p class="card-text">{{ taster.occupation }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}

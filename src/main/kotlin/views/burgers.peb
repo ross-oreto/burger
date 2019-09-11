@@ -1,18 +1,24 @@
+{% import 'landing.peb' as landingView %}
+{% import 'burger.html' as burgerView %}
+{% import 'credits.html' as creditsView %}
+
 {% extends "main.peb" %}
+
 {# @pebvariable name="viewModel" type="io.oreto.burger.BurgerModule.Companion.BurgersViewModel" #}
-{% set server = viewModel.model.server %}
+{% set model = viewModel.model %}
+{% set serverjs = model.js %}
 
 {% block css %}<link rel="stylesheet" href="/asset/css/{{ viewModel.group }}">{% endblock %}
 {% block js %}<script type="application/javascript" src="/asset/js/{{ viewModel.group }}"></script>{% endblock %}
 
 {% block body %}
-    {% include 'landing.peb' %}
+    {{ landingView.landing(model.year) }}
 
-    {% for burger in viewModel.model.burgers %}
-        {% include 'burger.peb' with {"num_rank": server.getArg(viewModel.pages) - loop.index} %}
+    {% for burger in model.burgers %}
+        {{ burgerView.burger(burger, model.pages - (loop.index + 1)) }}
     {% endfor %}
 
-    {% if server.getPathParam(viewModel.rank) == "0" %}
-        {% include 'credits.peb' with {"tasters": viewModel.model.tasters} %}
+    {% if model.rank == 0 %}
+        {{ creditsView.credits(model.tasters) }}
     {% endif %}
 {% endblock %}

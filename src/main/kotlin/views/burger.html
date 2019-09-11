@@ -1,0 +1,35 @@
+{% macro burger(burger, rank) %}
+<div class="burger-container {{ burger.id }}">
+    <div class="burger d-flex">
+        <div class="card center flex-grow-1 flex-lg-grow-0">
+            <div class="card-body">
+                <h1 class="card-title text-center">
+                    <strong class="rank-tag">
+                        #{{ rank }}
+                    </strong>
+                    {{ burger.restaurant }}
+                </h1>
+                <h2 class="card-title text-center"><u>{{ burger.plate }}</u></h2>
+                <h2><u>Score: {{ burger.total }} <small> / 20</small></u></h2>
+                <ul class="card-title">
+                    <li>Taste: {{ burger.taste }} <small> / 10</small></li>
+                    <li>Quality: {{ burger.quality }} <small> / 5</small></li>
+                    <li>Temperature: {{ burger.temperature }} <small> / 3</small></li>
+                    <li>Presentation: {{ burger.presentation }} <small> / 2</small></li>
+                    <li>Price: {{ burger.price }}</li>
+                </ul>
+                <p class="card-text">
+                    {{ burger.notes }}
+                </p>
+                <img src="/assets/css/burgers/{{ burger.year }}/{{ burger.id }}-sm.jpg"
+                     class="d-lg-none d-xl-none"
+                     alt="/assets/css/burgers/{{ burger.year }}/{{ burger.id }}-sm.jpg">
+            </div>
+            <div class="center text-center scroll-btn rounded-circle">
+                <img src="/assets/image/arrow-circle-down.svg" width="75" height="75"
+                     class="bounce" style="background-color: rgba(245, 245, 245, 0.2); border-radius: 100px;" />
+            </div>
+        </div>
+    </div>
+</div>
+{% endmacro %}

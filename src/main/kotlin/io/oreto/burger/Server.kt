@@ -9,6 +9,11 @@ import java.nio.file.Paths
 
 open class Server(context: Context) {
 
+    val url: Url = Url(context)
+    val args: MutableMap<String, String?> = mutableMapOf()
+    val assets: Assets? = null
+    var js: String = ""
+
     companion object {
         private const val serverJs = "server.js"
         const val name = "server"
@@ -64,11 +69,6 @@ $name.route = function(name) { return this.routes.find(function(r) { return r.na
         }""".trimIndent()
         }
     }
-
-    val url: Url = Url(context)
-    val args: MutableMap<String, String?> = mutableMapOf()
-    val assets: Assets? = null
-    var js: String = ""
 
     fun pathParam(name: String, value: String?): Server {
         url.pathParams[name] = value
