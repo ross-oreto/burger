@@ -51,7 +51,7 @@ class App :Kooby({
         val IS_WINDOWS = System.getProperty("os.name").toLowerCase().startsWith("windows")
         val IS_BASH = !IS_WINDOWS
 
-        lateinit var serverJs: File
+        lateinit var serverJs: Application.Asset.Path
         lateinit var app: Application
 
         fun application(env: Environment
@@ -115,7 +115,7 @@ class App :Kooby({
 
         class Asset(val packageName: String, val conf: Config, val minify: Boolean = false) {
 
-            data class Pack(val name: String, val type: String, val files: List<File>, val minify: Boolean = false) {
+            data class Pack(val name: String, val type: String, val files: List<Path>, val minify: Boolean = false) {
                 var contents = ""
 
                 init {
@@ -138,8 +138,8 @@ class App :Kooby({
                 fun packFiles(type: String
                                     , packageName: String
                                     , conf: Config
-                                    , files: MutableList<File> = mutableListOf()
-                                    , names: MutableList<String> = mutableListOf()): List<File> {
+                                    , files: MutableList<Path> = mutableListOf()
+                                    , names: MutableList<String> = mutableListOf()): List<Path> {
                     if (!names.contains(packageName)) {
                         names.add(packageName)
 
@@ -149,8 +149,10 @@ class App :Kooby({
                                     .forEach { name: String ->
                                         if (name.endsWith(".$type")) {
                                             val newFile = File("$path/$name")
-                                            if (newFile.exists() && files.none { f: File -> f.path == newFile.path }) {
-                                                files.add(newFile)
+                                            if (newFile.exists() && files.none { p: Path -> p.file.path == newFile.path }) {
+                                                val assetsPattern = conf.getString("pattern")
+                                                        ?.replace("/*", "")
+                                                files.add(Path("$assetsPattern/$name", newFile))
                                             }
                                         } else {
                                             packFiles(type, name, conf, files, names)
@@ -161,16 +163,16 @@ class App :Kooby({
                     return files
                 }
 
-                fun combine(files: List<File>): String {
-                    return if (files.isNotEmpty()) {  files.joinToString("\n") { it.readText() } } else ""
+                fun combine(files: List<Path>): String {
+                    return if (files.isNotEmpty()) {  files.joinToString("\n") { it.file.readText() } } else ""
                 }
 
-                fun minify(files: List<File>): String {
+                fun minify(files: List<Path>): String {
                     return if (files.isNotEmpty()) {
                         val exe = Paths.get(".", "minify", "minify").toString() +
                                 if (IS_WINDOWS) ".exe" else ""
 
-                        val fileNames = files.map { it.path }.joinToString(" ") { it }
+                        val fileNames = files.map { it.file.path }.joinToString(" ") { it }
                         val cmd = "$exe $fileNames"
                         println(cmd)
 
@@ -187,6 +189,8 @@ class App :Kooby({
             enum class Types {
                 css, js
             }
+
+            data class Path(val path: String, val file: File)
         }
 
         fun isLocal(): Boolean {

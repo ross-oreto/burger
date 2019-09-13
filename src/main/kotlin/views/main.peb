@@ -1,4 +1,5 @@
 {# @pebvariable name="serverjs" type="String" #}
+{# @pebvariable name="assets" type="io.oreto.burger.Server.Assets" #}
 <html lang="en">
 <head>
     <link rel="icon"
@@ -6,7 +7,13 @@
           href="/assets/favicon.png">
     <title>Burgers</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+{% if assets != null %}
+{% for path in assets.css %}
+    <link rel="stylesheet" href="{{ path }}">
+{% endfor %}
+{% else %}
 {% block css %}{% endblock %}
+{% endif %}
 </head>
 <body>
     <div class="container-fluid">
@@ -16,6 +23,11 @@
 {% if serverjs is not empty %}
 {{ serverjs | raw }}
 {% endif %}
-
-{% block js %}{% endblock %}
+{% if assets != null %}
+    {% for path in assets.js %}
+    <script src="{{ path }}"></script>
+    {% endfor %}
+{% else %}
+    {% block js %}{% endblock %}
+{% endif %}
 </html>

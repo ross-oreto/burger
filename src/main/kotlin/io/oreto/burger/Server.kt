@@ -11,21 +11,22 @@ open class Server(context: Context) {
 
     val url: Url = Url(context)
     val args: MutableMap<String, String?> = mutableMapOf()
-    val assets: Assets? = null
+    var assets: Assets? = null
     var js: String = ""
 
     companion object {
         private const val serverJs = "server.js"
         const val name = "server"
 
-        fun baseJs(environment: Environment, routes: List<Route>, config: Config): File {
+        fun baseJs(environment: Environment, routes: List<Route>, config: Config): App.Application.Asset.Path {
             val file = File(Paths.get(config.getString("assets.path"), "js", serverJs).toString())
             file.writeText("""if(typeof $name === 'undefined') $name = { };
 $name.env = [${environment.activeNames.map { "'$it'" }.joinToString(", ") { it }}];
 $name.routes = ${routes.map { routeToJs(it) }};
 $name.route = function(name) { return this.routes.find(function(r) { return r.name === name; }); };
 """.trimIndent())
-            return file
+            val assetsPattern = config.getString("assets.pattern")?.replace("/*", "")
+            return App.Application.Asset.Path("$assetsPattern/js/$serverJs", file)
         }
 
         private fun routeToJs(namedRoute: App.Application.NamedRoute): String {
@@ -116,13 +117,10 @@ $name.route = function(name) { return this.routes.find(function(r) { return r.na
     }
 
     private fun entryToString(key: String, value: String?): String {
-        return if (value == null) {
-            "null"
-        } else {
-            val typeKey = key.split("_")
-            val type = if (typeKey.size > 1) typeKey[0] else null
-            if (type == null) "$key: '$value'"
-            else "$key: $value"
+        return when {
+            value == null -> "null"
+            key[0].isUpperCase() -> "$key: $value"
+            else -> "$key: '$value'"
         }
     }
 
@@ -144,6 +142,13 @@ $name.route = function(name) { return this.routes.find(function(r) { return r.na
                     }
         """.trimIndent().replace("\n", "").replace(Regex("\\s+"), " ")
         js = """<script type="application/javascript">var $name=$serverVar;</script>"""
+        return this
+    }
+
+    fun withAssets(name: String): Server {
+        assets = Assets(name
+                , App.app.getPackage(name)?.packages?.get("js")?.files?.map { it.path } ?: listOf()
+                , App.app.getPackage(name)?.packages?.get("css")?.files?.map { it.path } ?: listOf())
         return this
     }
 }

@@ -7,6 +7,7 @@
 {# @pebvariable name="viewModel" type="io.oreto.burger.BurgerModule.Companion.BurgersViewModel" #}
 {% set model = viewModel.model %}
 {% set serverjs = model.js %}
+{% set assets = model.assets %}
 
 {% block css %}<link rel="stylesheet" href="/asset/css/{{ viewModel.group }}">{% endblock %}
 {% block js %}<script type="application/javascript" src="/asset/js/{{ viewModel.group }}"></script>{% endblock %}

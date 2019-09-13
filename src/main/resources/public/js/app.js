@@ -1,29 +1,29 @@
 var pageContainer = 'burger-container';
-if (server.url.pathParams.num_rank > 0) {
+if (server.url.pathParams.Rank > 0) {
     var infScroll = new InfiniteScroll( '.container-fluid', {
         path: function () {
-            if (server.url.pathParams.num_rank > 0) {
-                return server.route('burgers-by-num_year-by-num_rank')
-                    .toString(server.url.pathParams.num_year, server.url.pathParams.num_rank - 1);
+            if (server.url.pathParams.Rank > 0) {
+                return server.route('burgers-by-Year-by-Rank')
+                    .toString(server.url.pathParams.Year, server.url.pathParams.Rank - 1);
             }
         },
         append: '.' + pageContainer
     });
 
     infScroll.on( 'request', function( path ) {
-        var index = (server.args.num_pages - server.url.pathParams.num_rank);
+        var index = (server.args.Pages - server.url.pathParams.Rank);
         if (this.loadCount > 0) {
             initScroll(index);
         }
-        if (server.url.pathParams.num_rank === 1) removeBounce(index);
+        if (server.url.pathParams.Rank === 1) removeBounce(index);
         removeBounce(index - 1);
 
-        server.url.pathParams.num_rank--;
+        server.url.pathParams.Rank--;
     });
 }
 
 $(document).ready(function() {
-    var len = server.args.num_pages - server.url.pathParams.num_rank;
+    var len = server.args.Pages - server.url.pathParams.Rank;
     for(var i = 0; i < len; i++) {
         initScroll(i);
         removeBounce(i);

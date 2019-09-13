@@ -17,11 +17,12 @@ class BurgerModule : Kooby({
                     .pathParam(burgersViewModel.rank, rank.toString())
                     .arg(burgersViewModel.pages, pages.toString())
                     .withJs()
+                    //.withAssets(burgersViewModel.group)
 
             burgersViewModel.model = BurgersViewModel.Model(
                     listOf()
                     , Taster.list
-                    , year, rank, pages, server.js)
+                    , year, rank, pages, server.js, server.assets)
 
             ModelAndView(burgersViewModel.view)
                     .put(modelName, burgersViewModel)
@@ -48,11 +49,12 @@ class BurgerModule : Kooby({
                 val server: Server = Server(ctx)
                         .pathParam(burgersViewModel.year, year.toString())
                         .pathParam(burgersViewModel.rank, rank.toString())
-                        .arg(burgersViewModel.pages, pages.toString()).withJs()
+                        .arg(burgersViewModel.pages, pages.toString())
+                        //.withJs().withAssets(burgersViewModel.group)
 
                 burgersViewModel.model = BurgersViewModel.Model(
                         Burger.findAll(year).subList(0, if (page > burgerCount) burgerCount else page)
-                        , Taster.list, year, rank, pages, server.js)
+                        , Taster.list, year, rank, pages, server.js, server.assets)
 
                 ModelAndView(burgersViewModel.view)
                         .put(modelName, burgersViewModel)
@@ -68,7 +70,7 @@ class BurgerModule : Kooby({
         val creditsView = CreditsView()
 
         open class BurgersGroup(val group: String = "burgers"
-                                , val year: String = "num_year"
+                                , val year: String = "Year"
                                 , val tasters: String = "tasters")
 
         open class BurgerViewModel(open val view: String = "burger.$templateExt"
@@ -77,8 +79,8 @@ class BurgerModule : Kooby({
             data class Model(val burger: Burger?, val rank: Int)
         }
 
-        open class BurgersViewModel(val pages: String = "num_pages"
-                                    , val rank: String = "num_rank") : BurgersGroup() {
+        open class BurgersViewModel(val pages: String = "Pages"
+                                    , val rank: String = "Rank") : BurgersGroup() {
             val view: String = "$group.$templateExt"
             var model: Model? = null
 
@@ -87,7 +89,8 @@ class BurgerModule : Kooby({
                              , val year: Int
                              , val rank: Int
                              , val pages: Int
-                             , val js: String? = null)
+                             , val js: String? = null
+                             , val assets: Server.Assets? = null)
         }
 
         open class CreditsView(val view: String = "credits.$templateExt") : BurgersGroup()
