@@ -37,10 +37,6 @@ class App :Kooby({
 
     assets(config.getString("assets.pattern"), config.getString("assets.path"))
 
-    before {
-        attribute(Server.name, Server(ctx))
-    }
-
     install(PebbleModule(PebbleModule.create()
             .setTemplatesPath(Paths.get("src", "main", "kotlin", "views").toString())
             .build(environment)))

@@ -1,4 +1,5 @@
 var pageContainer = 'burger-container';
+
 if (server.url.pathParams.Rank > 0) {
     var infScroll = new InfiniteScroll( '.container-fluid', {
         path: function () {

@@ -7,12 +7,11 @@ import io.jooby.Route
 import java.io.File
 import java.nio.file.Paths
 
-open class Server(context: Context) {
+open class Server(val context: Context, val name: String, val bundle: Boolean = true) {
 
     val url: Url = Url(context)
     val args: MutableMap<String, String?> = mutableMapOf()
-    var assets: Assets? = null
-    var js: String = ""
+    var assets: Assets = withAssets(name)
 
     companion object {
         private const val serverJs = "server.js"
@@ -107,8 +106,9 @@ $name.route = function(name) { return this.routes.find(function(r) { return r.na
     }
 
     data class Assets(val packageName: String
-                      , val js: List<String> = listOf()
-                      , val css: List<String> = listOf())
+                      , var rawjs: String
+                      , val js: List<String>? = null
+                      , val css: List<String>? = null)
 
     private fun paramsToString(params: MutableMap<String, String?>): String {
         return params.map {
@@ -124,7 +124,12 @@ $name.route = function(name) { return this.routes.find(function(r) { return r.na
         }
     }
 
-    fun withJs(): Server {
+    fun build(): Server {
+        assets.rawjs = withJs()
+        return this
+    }
+
+    private fun withJs(): String {
         val serverVar = """{
                         url: {
                             path: '${url.path}'
@@ -141,14 +146,13 @@ $name.route = function(name) { return this.routes.find(function(r) { return r.na
                         , getPathParam: function(name) { return url.pathParams[name]; } 
                     }
         """.trimIndent().replace("\n", "").replace(Regex("\\s+"), " ")
-        js = """<script type="application/javascript">var $name=$serverVar;</script>"""
-        return this
+        return """<script type="application/javascript">var ${Server.name}=$serverVar;</script>"""
     }
 
-    fun withAssets(name: String): Server {
-        assets = Assets(name
+    private fun withAssets(name: String): Assets {
+        return if (bundle) Assets(name, "")
+                else Assets(name, ""
                 , App.app.getPackage(name)?.packages?.get("js")?.files?.map { it.path } ?: listOf()
                 , App.app.getPackage(name)?.packages?.get("css")?.files?.map { it.path } ?: listOf())
-        return this
     }
 }
