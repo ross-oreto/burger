@@ -166,5 +166,17 @@
     "price": "$",
     "notes": "Great little cheeseburger for the price. Very tasty and you'll still be able to move around afterwards.",
     "year": 2019
+  },
+  {
+    "id": "mockingbird",
+    "restaurant": "The Mockingbird",
+    "plate": "The Mockingbird Burger",
+    "tastes": [8, 7.5],
+    "qualities": [3.5, 3.5],
+    "temperatures": [1.5, 1.0],
+    "presentations": [1.0, 1.5],
+    "price": "$$$",
+    "notes": "Very tasty cheeseburger with a great sauce and good flavor.",
+    "year": 2019
   }
 ]
