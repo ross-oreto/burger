@@ -7,19 +7,16 @@
 {% set assets = model.assets %}
 {% set title = "Burgers" %}
 
-{% embed "main.peb" %}
-    {% block css %}<link rel="stylesheet" href="/asset/css/{{ viewModel.group }}">{% endblock %}
-    {% block js %}<script type="application/javascript" src="/asset/js/{{ viewModel.group }}"></script>{% endblock %}
+{% extends 'main.peb' %}
 
-    {% block body %}
-        {{ landingView.landing(model.year) }}
+{% block body %}
+    {{ landingView.landing(model.year) }}
 
-        {% for burger in model.burgers %}
-            {{ burgerView.burger(burger, model.pages - (loop.index + 1)) }}
-        {% endfor %}
+    {% for burger in model.burgers %}
+        {{ burgerView.burger(burger, model.pages - (loop.index + 1)) }}
+    {% endfor %}
 
-        {% if model.rank == 0 %}
-            {{ creditsView.credits(model.tasters) }}
-        {% endif %}
-    {% endblock %}
-{% endembed %}
+    {% if model.rank == 0 %}
+        {{ creditsView.credits(model.tasters) }}
+    {% endif %}
+{% endblock %}

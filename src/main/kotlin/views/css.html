@@ -1,0 +1,5 @@
+{% macro cssAssets(assets) %}
+    {% for path in assets.css %}
+        <link rel="stylesheet" href="{{ path }}">
+    {% endfor %}
+{% endmacro %}

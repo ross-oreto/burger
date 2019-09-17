@@ -150,7 +150,10 @@ $name.route = function(name) { return this.routes.find(function(r) { return r.na
     }
 
     private fun withAssets(name: String): Assets {
-        return if (bundle) Assets(name, "")
+        val bundlePath: String = App.app.conf.getString("assets.bundlePath")
+        return if (bundle) Assets(name, ""
+                , listOf("$bundlePath/js/$name")
+                , listOf("$bundlePath/css/$name"))
                 else Assets(name, ""
                 , App.app.getPackage(name)?.packages?.get("js")?.files?.map { it.path } ?: listOf()
                 , App.app.getPackage(name)?.packages?.get("css")?.files?.map { it.path } ?: listOf())

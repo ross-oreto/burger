@@ -5,15 +5,14 @@ import io.jooby.MediaType
 import io.jooby.annotations.Path
 
 @Path("/asset")
-class AssetModule  : Kooby({
-
-    val typeParamName = "type"
-    val packageParamName = "packageName"
+class AssetModule : Kooby({
 
     val mediaTypeMap = mapOf(App.Application.Asset.Types.css.name to MediaType.CSS
             , App.Application.Asset.Types.js.name to MediaType.JS)
 
-    path("/asset") {
+    val group = config.getString("assets.bundlePath")
+
+    path("/$group") {
         get("/{$typeParamName}/{$packageParamName}") {
             val type: String = ctx.path(typeParamName).value()
             ctx.setResponseType(mediaTypeMap.getOrDefault(type, MediaType.TEXT))
@@ -28,4 +27,9 @@ class AssetModule  : Kooby({
             } ?: ""
         }
     }
-})
+}) {
+    companion object {
+        val typeParamName = "type"
+        val packageParamName = "packageName"
+    }
+}

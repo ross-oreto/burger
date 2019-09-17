@@ -1,5 +1,7 @@
 {# @pebvariable name="title" type="String" #}
 {# @pebvariable name="assets" type="io.oreto.burger.Server.Assets" #}
+{% import 'css.html' %}
+{% import 'js.html' %}
 <html lang="en">
 <head>
     <link rel="icon"
@@ -7,27 +9,12 @@
           href="/assets/favicon.png">
     <title>{{ title }}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-{% if assets.css != null %}
-{% for path in assets.css %}
-    <link rel="stylesheet" href="{{ path }}">
-{% endfor %}
-{% else %}
-{% block css %}{% endblock %}
-{% endif %}
+    {{ cssAssets(assets) }}
 </head>
 <body>
     <div class="container-fluid">
-{% block body %}{% endblock %}
+        {% block body %}{% endblock %}
     </div>
 </body>
-{% if assets.rawjs is not empty %}
-{{ assets.rawjs | raw }}
-{% endif %}
-{% if assets.js != null %}
-    {% for path in assets.js %}
-    <script src="{{ path }}"></script>
-    {% endfor %}
-{% else %}
-    {% block js %}{% endblock %}
-{% endif %}
+{{ jsAssets(assets) }}
 </html>

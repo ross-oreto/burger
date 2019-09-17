@@ -1,0 +1,8 @@
+{% macro jsAssets(assets) %}
+{% if assets.rawjs is not empty %}
+    {{ assets.rawjs | raw }}
+{% endif %}
+{% for path in assets.js %}
+    <script src="{{ path }}"></script>
+{% endfor %}
+{% endmacro %}
