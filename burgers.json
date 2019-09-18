@@ -14,7 +14,7 @@
   {
     "id": "melrose",
     "restaurant": "M.L. Rose at Melrose",
-    "plate": "The Animal",
+    "plate": "The ANML Style",
     "tastes": [8.0, 7.0],
     "qualities": [3.5, 2.0],
     "temperatures": [1.0, 1.0],
@@ -51,7 +51,7 @@
     "id": "republic",
     "restaurant": "Burger Republic at the Gulch",
     "plate": "XXX",
-    "tastes": [8.0, 9.0],
+    "tastes": [8.5, 9.0],
     "qualities": [4.0, 4.0],
     "temperatures": [2.0, 2.0],
     "presentations": [1.0, 1.0],
