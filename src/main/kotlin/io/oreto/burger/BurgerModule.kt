@@ -6,37 +6,41 @@ import io.oreto.burger.Module.Companion.ajax
 
 class BurgerModule : Kooby({
 
-    path("/${burgersViewModel.group}/{${burgersViewModel.year}}") {
-        get("/") {
-            val year: Int = ctx.path(burgersViewModel.year).intValue()
-            val rank: Int = Burger.count(year) + 1
+    path("/${burgersViewModel.group}") {
+
+        get("/{${burgerViewModel.city}}/{${burgerViewModel.state}}") {
+            val rank: Int = Burger.count() + 1
             val pages: Int = rank
 
             val server: Server = Server(ctx, burgersViewModel.group)
-                    .pathParam(burgersViewModel.year, year.toString())
                     .pathParam(burgersViewModel.rank, rank.toString())
                     .arg(burgersViewModel.pages, pages.toString()).build()
+
+            ctx.pathString()
 
             burgersViewModel.model = BurgersViewModel.Model(
                     listOf()
                     , Taster.list
-                    , year, rank, pages, server.assets)
+                    , ctx.path(burgerViewModel.city).toString().capitalize()
+                    , ctx.path(burgerViewModel.state).toString().toUpperCase()
+                    , rank
+                    , pages
+                    , server.assets)
 
             ModelAndView(burgersViewModel.view)
                     .put(modelName, burgersViewModel)
         }
 
-        get("/{${burgersViewModel.rank}}") {
+        get("/{${burgerViewModel.city}}/{${burgerViewModel.state}}/{${burgersViewModel.rank}}") {
             val ajax: Boolean = ajax(ctx)
-            val year: Int = ctx.path(burgersViewModel.year).intValue()
             val rank: Int = ctx.path(burgersViewModel.rank).intValue()
-            val burgerCount: Int = Burger.count(year)
+            val burgerCount: Int = Burger.count()
             val pages: Int = burgerCount + 1
-            val page: Int = pages - rank
 
             if (ajax) {
                 if (rank > 0) {
-                    burgerViewModel.model = BurgerViewModel.Model(Burger.at(year, page), rank)
+                    burgerViewModel.model = BurgerViewModel.Model(Burger.findAll()
+                            .getOrNull(rank - 1), rank)
                     ModelAndView(burgerViewModel.view)
                             .put(modelName, burgerViewModel)
                 } else {
@@ -45,13 +49,16 @@ class BurgerModule : Kooby({
                 }
             } else {
                 val server: Server = Server(ctx, burgersViewModel.group)
-                        .pathParam(burgersViewModel.year, year.toString())
-                        .pathParam(burgersViewModel.rank, rank.toString())
                         .arg(burgersViewModel.pages, pages.toString()).build()
 
+                val page: Int = pages - rank
                 burgersViewModel.model = BurgersViewModel.Model(
-                        Burger.findAll(year).subList(0, if (page > burgerCount) burgerCount else page)
-                        , Taster.list, year, rank, pages, server.assets)
+                        Burger.findAll()
+                                .reversed().subList(0, if (page > burgerCount) burgerCount else page)
+                        , Taster.list
+                        , ctx.path(burgerViewModel.city).toString().capitalize()
+                        , ctx.path(burgerViewModel.state).toString().toUpperCase()
+                        , rank, pages, server.assets)
 
                 ModelAndView(burgersViewModel.view)
                         .put(modelName, burgersViewModel)
@@ -62,12 +69,16 @@ class BurgerModule : Kooby({
     companion object {
         const val modelName = "viewModel"
         const val templateExt = "peb"
+        const val defaultCity = "Nashville"
+        const val defaultState = "TN"
+
         val burgersViewModel = BurgersViewModel()
         val burgerViewModel = BurgerViewModel()
         val creditsView = CreditsView()
 
         open class BurgersGroup(val group: String = "burgers"
-                                , val year: String = "Year"
+                                , val city: String = "city"
+                                , val state: String = "state"
                                 , val tasters: String = "tasters")
 
         open class BurgerViewModel(open val view: String = "burger.$templateExt"
@@ -78,12 +89,13 @@ class BurgerModule : Kooby({
 
         open class BurgersViewModel(val pages: String = "Pages"
                                     , val rank: String = "Rank") : BurgersGroup() {
-            val view: String = "$group.$templateExt"
+            open val view: String = "$group.$templateExt"
             var model: Model? = null
 
             data class Model(val burgers: List<Burger>
                              , val tasters: List<Taster>
-                             , val year: Int
+                             , val city: String
+                             , val state: String
                              , val rank: Int
                              , val pages: Int
                              , val assets: Server.Assets)

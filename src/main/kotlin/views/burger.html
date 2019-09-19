@@ -1,5 +1,6 @@
 {% macro burger(burger, rank) %}
-<div class="burger-container {{ burger.id }}">
+<div style="background: black url('/assets/css/burgers/{{ burger.city }}/{{ burger.state }}/{{ burger.id }}.jpg') no-repeat fixed center center;"
+     class="burger-container cover-image">
     <div class="burger d-flex">
         <div class="card center flex-grow-1 flex-lg-grow-0">
             <div class="card-body">
@@ -21,8 +22,8 @@
                 <p class="card-text">
                     {{ burger.notes }}
                 </p>
-                <img src="/assets/css/burgers/{{ burger.year }}/{{ burger.id }}-sm.jpg"
-                     alt="/assets/css/burgers/{{ burger.year }}/{{ burger.id }}-sm.jpg">
+                <img src="/assets/css/burgers/{{ burger.city }}/{{ burger.state }}/{{ burger.id }}-sm.jpg"
+                     alt="/assets/css/burgers/{{ burger.city }}/{{ burger.state }}/{{ burger.id }}-sm.jpg">
             </div>
             <div class="center text-center scroll-btn rounded-circle">
                 <img src="/assets/image/arrow-circle-down.svg" width="75" height="75"

@@ -2,6 +2,8 @@
   {
     "id": "hugh",
     "restaurant": "Hugh Baby's at West End",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "Double Cheeseburger",
     "tastes": [7.5, 7.0],
     "qualities": [1, 2.0],
@@ -9,11 +11,13 @@
     "presentations": [1.0, 2.0],
     "price": "$",
     "notes": "Cheap and amazing value. Best bang for buck burger in Nashville. Doesn't sacrifice on taste or quality and offers variety on the classic style choices.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "melrose",
     "restaurant": "M.L. Rose at Melrose",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "The ANML Style",
     "tastes": [8.0, 7.0],
     "qualities": [3.5, 2.0],
@@ -21,11 +25,13 @@
     "presentations": [1.0, 2.0],
     "price": "$$",
     "notes": "A solid choice and looks great alongside waffle fries. The only downside is the meat which is overcooked for a gourmet style and loses a lot of flavor.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "mill",
     "restaurant": "Mill Creek Taproom at 12th South",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "The Smashville Burger",
     "tastes": [7.5, 8.0],
     "qualities": [3.0, 3.0],
@@ -33,11 +39,13 @@
     "presentations": [1.0, 2.0],
     "price": "$$",
     "notes": "This isn't just a brewery, it's a hidden burger gem! This little classic with class burger kills it and pairs well with their excellent brews.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "jack",
     "restaurant": "Jack Brown's Beer and Burger Joint",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "Dr Gonzo",
     "tastes": [9.0, 8.0],
     "qualities": [3.5, 2.0],
@@ -45,11 +53,13 @@
     "presentations": [1.0, 2.0],
     "price": "$$",
     "notes": "King of the classic diner style burgers. This place combines not only the best diner style burgers in town but also adds the most original twists on classics. They are cooked right in front of you on the flattop and come in hot!",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "republic",
     "restaurant": "Burger Republic at the Gulch",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "XXX",
     "tastes": [8.5, 9.0],
     "qualities": [4.0, 4.0],
@@ -57,11 +67,13 @@
     "presentations": [1.0, 1.0],
     "price": "$$",
     "notes": "Food porn at its finest. The Triple decker burger is large and super tasty. It's a little messy so handle with care.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "union",
     "restaurant": "Union Common",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "The Union Rock Burger",
     "tastes": [9.0, 9.0],
     "qualities": [4.0, 4.0],
@@ -69,11 +81,13 @@
     "presentations": [1.0, 1.5],
     "price": "$$$",
     "notes": "A quality cheese burger cooked by a quality steakhouse. The meat is cooked nicely with great flavor and is not overpowered by the grilled onions or melty goodness of the cheese.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "t-row",
     "restaurant": "The Row",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "The Row Burger",
     "tastes": [8.5, 8.0],
     "qualities": [3.5, 4.0],
@@ -81,11 +95,13 @@
     "presentations": [1.0, 2.0],
     "price": "$$",
     "notes": "A solid and southern cheeseburger. The meat is quality, cooked perfectly, paired with house made pimento cheese and a fried green tomato.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "husk",
     "restaurant": "Husk",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "Cheeseburger",
     "tastes": [9.0, 9.0],
     "qualities": [4.0, 5.0],
@@ -93,11 +109,13 @@
     "presentations": [1.0, 1.0],
     "price": "$$$",
     "notes": "Superb cheeseburger as you can only expect from a Husk chef. It's a classic style executed masterfully. The fries were lacking as was any originality, but it won't slow down your appetite. Side note: only available for lunch.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "brew",
     "restaurant": "Tennessee Brew Works",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "Five Beer Burger",
     "tastes": [9.5, 9.5],
     "qualities": [4.5, 4.0],
@@ -105,23 +123,27 @@
     "presentations": [1.5, 2.0],
     "price": "$$$",
     "notes": "The 2nd hidden brewery burger. This burger is loaded with rich and savory flavors. At first is almost seems too potent but it finishes really well. The meat is super juicy and tender and the bread holds up surprisingly well. Even the fries are loaded with seasoned flavor.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "emmy",
     "restaurant": "Emmy 2",
-    "plate": "Le Bigg Matt",
+    "city": "Nashville",
+    "state": "TN",
+    "plate": "Le Big Matt",
     "tastes": [10.0, 10.0],
     "qualities": [5.0, 5.0],
     "temperatures": [2.5, 2.5],
     "presentations": [1.5, 2.0],
     "price": "$$$",
     "notes": "We don't understand how this burger is so good. The sandwich is a double decker and the meat is still somehow cooked nicely and kept thin. The sauce, pretzel bun, and cheese really sets this guy off. Matt can get a little messy but completely worth it.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "frisco",
     "restaurant": "Del Frisco's Grille at the Gulch",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "Grille Prime Cheeseburger",
     "tastes": [8.5, 8.0],
     "qualities": [3.5, 3.0],
@@ -129,11 +151,13 @@
     "presentations": [1.5, 2.0],
     "price": "$$$",
     "notes": "Amazingly cooked double stacked high quality beef with great flavor. The rest of the sandwich wasn't on the same level as the meat or this would have scored higher. Regardless this is a great burger to try.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "pinewood",
     "restaurant": "Pinewood Social",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "Cheeseburger",
     "tastes": [8.5, 8.0],
     "qualities": [4.0, 3.5],
@@ -141,11 +165,13 @@
     "presentations": [2.0, 2.0],
     "price": "$$",
     "notes": "We were just trying to kill time while having a drink and waiting for dinner at another restaurant but we found another great classic cheeseburger; And it's done right with high quality ingredients and an excellent taste profile.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "chagos",
     "restaurant": "Chago's Cantina at Belmont",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "Cheeseburger",
     "tastes": [8.0, 7.5],
     "qualities": [3.5, 3.5],
@@ -153,11 +179,13 @@
     "presentations": [1.5, 2.0],
     "price": "$$",
     "notes": "This great little Mexican kitchen really knows the gringos because they added an awesome cheeseburger to the menu. Not only did they add one but it quickly became one of Nashville's favorites! The saucy burger has surprisingly good flavor for the patty size.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "shack",
     "restaurant": "Shake Shack at Green Hills",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "SmokeShack",
     "tastes": [7.5, 8.0],
     "qualities": [2.0, 2.5],
@@ -165,18 +193,34 @@
     "presentations": [1.0, 1.5],
     "price": "$",
     "notes": "Great little cheeseburger for the price. Very tasty and you'll still be able to move around afterwards.",
-    "year": 2019
+    "date": "2019-09-01"
   },
   {
     "id": "mockingbird",
     "restaurant": "The Mockingbird",
+    "city": "Nashville",
+    "state": "TN",
     "plate": "The Mockingbird Burger",
-    "tastes": [8, 7.5],
+    "tastes": [8.0, 7.5],
     "qualities": [3.5, 3.5],
     "temperatures": [1.5, 1.0],
     "presentations": [1.0, 1.5],
     "price": "$$$",
     "notes": "Very tasty cheeseburger with a great sauce and good flavor.",
-    "year": 2019
+    "date": "2019-09-01"
+  },
+  {
+    "id": "barebones",
+    "restaurant": "Barebones Butcher",
+    "city": "Nashville",
+    "state": "TN",
+    "plate": "Cheeseburger",
+    "tastes": [9.0, 8.5],
+    "qualities": [4.0, 3.5],
+    "temperatures": [2.5, 3.0],
+    "presentations": [1.0, 1.5],
+    "price": "$$",
+    "notes": "Great little butcher shop that also serves their inventory in house. One of the menu items is a classic cheeseburger and the meat is of outstanding quality and taste.",
+    "date": "2019-09-18"
   }
 ]

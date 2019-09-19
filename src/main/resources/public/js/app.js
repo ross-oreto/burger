@@ -4,8 +4,10 @@ if (server.url.pathParams.Rank > 0) {
     var infScroll = new InfiniteScroll( '.container-fluid', {
         path: function () {
             if (server.url.pathParams.Rank > 0) {
-                return server.route('burgers-by-Year-by-Rank')
-                    .toString(server.url.pathParams.Year, server.url.pathParams.Rank - 1);
+                return server.route("burgers-by-city-by-state-by-Rank")
+                    .toString(server.url.pathParams.city
+                        , server.url.pathParams.state
+                        , server.url.pathParams.Rank - 1);
             }
         },
         append: '.' + pageContainer

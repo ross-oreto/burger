@@ -10,7 +10,7 @@
 {% extends 'main.peb' %}
 
 {% block body %}
-    {{ landingView.landing(model.year) }}
+    {{ landingView.landing(model.city, model.state) }}
 
     {% for burger in model.burgers %}
         {{ burgerView.burger(burger, model.pages - (loop.index + 1)) }}

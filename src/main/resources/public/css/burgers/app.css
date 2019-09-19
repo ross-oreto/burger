@@ -52,3 +52,26 @@ body {
         transform: translateY(-15px);
     }
 }
+
+.landing {
+    background: black url("/assets/css/burgers/Nashville/TN/landing.jpg") no-repeat fixed center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}
+
+.cover-image {
+    -webkit-background-size: cover !important;
+    -moz-background-size: cover !important;
+    background-size: cover !important;
+    -o-background-size: cover !important;
+}
+
+.credits {
+    background: black url("/assets/css/burgers/Nashville/TN/credits.jpg") no-repeat fixed center center;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    background-size: cover;
+    -o-background-size: cover;
+}

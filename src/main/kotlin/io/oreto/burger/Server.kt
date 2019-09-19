@@ -11,6 +11,7 @@ open class Server(val context: Context, val name: String, val bundle: Boolean = 
 
     val url: Url = Url(context)
     val args: MutableMap<String, String?> = mutableMapOf()
+    val routes: List<Route> = context.router.routes
     var assets: Assets = withAssets(name)
 
     companion object {

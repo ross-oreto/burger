@@ -1,9 +1,9 @@
-{% macro landing(year) %}
+{% macro landing(city, state) %}
 <div class="burger-container landing">
     <div class="burger d-flex">
         <div class="card center flex-grow-1 flex-lg-grow-0">
             <div class="card-body">
-                <h1 class="card-title text-center">The definitive {{ year }} Nashville, TN <br>burger countdown</h1>
+                <h1 class="card-title text-center">The definitive {{ city }}, {{ state }} <br>burger rankings</h1>
                 <p class="card-text">
                     We personally tried several of Nashville's most recommended burgers and ranked them according to a well thought out scoring system.
                     <br><br>
@@ -21,7 +21,7 @@
                     <li>
                         <u>Presentation (0-2):</u> Not just how well the burger looks plated,
                         but how original the sandwich is and how easy it is to handle and savor throughout the meal.
-                    </li>
+                    </li><br>
                     <li>
                         <u>Price: </u> $ = $8 or less | $$ = $9-$14 | $$$ = $15 or more
                     </li>
