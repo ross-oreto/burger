@@ -11,8 +11,6 @@
                     {{ burger.restaurant }}
                 </h1>
                 <h2 class="card-title text-center"><u>{{ burger.plate }}</u></h2>
-                <img class="rounded-pill float-right" src="/assets/css/burgers/{{ burger.city }}/{{ burger.state }}/{{ burger.id }}-sm.jpg"
-                     alt="/assets/css/burgers/{{ burger.city }}/{{ burger.state }}/{{ burger.id }}-sm.jpg">
                 <h2><u>Score: {{ burger.total }} <small> / 20</small></u></h2>
                 <ul class="card-title">
                     <li>Taste: {{ burger.taste }} <small> / 10</small></li>
@@ -21,6 +19,8 @@
                     <li>Presentation: {{ burger.presentation }} <small> / 2</small></li>
                     <li>Price: {{ burger.price }}</li>
                 </ul>
+                <img class="rounded-pill float-right" src="/assets/css/burgers/{{ burger.city }}/{{ burger.state }}/{{ burger.id }}-sm.jpg"
+                     alt="/assets/css/burgers/{{ burger.city }}/{{ burger.state }}/{{ burger.id }}-sm.jpg">
                 <p class="card-text">
                     {{ burger.notes }}
                 </p>
