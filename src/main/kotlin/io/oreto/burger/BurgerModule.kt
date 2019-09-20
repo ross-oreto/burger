@@ -21,8 +21,8 @@ class BurgerModule : Kooby({
             burgersViewModel.model = BurgersViewModel.Model(
                     listOf()
                     , Taster.list
-                    , ctx.path(burgerViewModel.city).toString().capitalize()
-                    , ctx.path(burgerViewModel.state).toString().toUpperCase()
+                    , ctx.path(burgerViewModel.city).toString()
+                    , ctx.path(burgerViewModel.state).toString()
                     , rank
                     , pages
                     , server.assets)
@@ -56,8 +56,8 @@ class BurgerModule : Kooby({
                         Burger.findAll()
                                 .reversed().subList(0, if (page > burgerCount) burgerCount else page)
                         , Taster.list
-                        , ctx.path(burgerViewModel.city).toString().capitalize()
-                        , ctx.path(burgerViewModel.state).toString().toUpperCase()
+                        , ctx.path(burgerViewModel.city).toString()
+                        , ctx.path(burgerViewModel.state).toString()
                         , rank, pages, server.assets)
 
                 ModelAndView(burgersViewModel.view)
