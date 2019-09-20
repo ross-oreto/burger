@@ -47,6 +47,16 @@
             <artifactId>jooby-pebble</artifactId>
         </dependency>
 
+        <!-- Database -->
+        <dependency>
+            <groupId>io.jooby</groupId>
+            <artifactId>jooby-hikari</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.jooby</groupId>
+            <artifactId>jooby-jdbi</artifactId>
+        </dependency>
+
         <!-- Tests -->
         <dependency>
             <groupId>org.junit.jupiter</groupId>
