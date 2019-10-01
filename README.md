@@ -11,8 +11,8 @@
 - Maven
 
 ### setup and run
-- cd burger
+- cd sorted
 - mvn jooby:run
 
 ### demo
-- https://nashville-burgers.herokuapp.com/burgers/2019
+https://sorted-io.herokuapp.com/burgers/nashville/tn
